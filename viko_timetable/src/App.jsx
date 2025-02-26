@@ -140,7 +140,7 @@ const App = () => {
   const setPrevDay = () => {
     setDate(moment(date).subtract(1, "day").format("YYYY-MM-DD"));
   };
-
+  console.log(currentDayLectureInfo);
   return (
     <>
       <main>
