@@ -1,0 +1,10 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-boxßs;
+}
+main {
+  background-color: bisque;
+  height: 100vh;
+  width: 100vw;
+}

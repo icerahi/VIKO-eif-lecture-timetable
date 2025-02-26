@@ -1,0 +1,66 @@
+.today-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+.timetable {
+  width: 80%;
+  height: 80vh;
+  background: white;
+  border-radius: 20px;
+  width: 50%;
+  margin-top: 5%;
+  margin-right: 5%;
+  border: 10px solid black;
+  position: relative;
+}
+.camera-nosile {
+  height: 30px;
+  width: 120px;
+  background: black;
+  margin: 10px auto;
+  border-radius: 20px;
+}
+.lecture-container {
+  /* position: absolute; */
+  margin: 3%;
+  overflow: scroll;
+  width: 100%;
+  background: rgb(104, 50, 9);
+  color: white;
+  border-radius: 10px 10px 0 0;
+}
+.title-info {
+  margin: 10px;
+}
+
+.lecture,
+.lecture1 {
+  background-color: red;
+  color: black;
+  padding: 2%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+  flex-grow: 1;
+  position: relative;
+}
+
+.lecture1::after {
+  content: "No lecture";
+  position: absolute;
+  text-align: center;
+  color: black;
+  top: 40%;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: black;
+  transform: rotate(5deg);
+}
+.lecture1 {
+  background-color: #aeb3b3;
+  opacity: 0.33;
+}

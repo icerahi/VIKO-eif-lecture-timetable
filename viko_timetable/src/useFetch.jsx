@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 
-const useFetch = (URL, payload) => {
+const useFetch = (URL, payload, date) => {
   const [data, setData] = useState(null);
 
   useEffect(() => {
     let isMount = true;
     fetch(URL, {
-      // Replace with actual API URL
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -22,7 +21,7 @@ const useFetch = (URL, payload) => {
     () => {
       return (isMount = false);
     };
-  }, [URL]);
+  }, [URL, date]);
 
   return data;
 };
