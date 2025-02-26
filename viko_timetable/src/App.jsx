@@ -26,13 +26,13 @@ const App = () => {
   const endDate = moment().endOf("week").add(1, "day").format("YYYY-MM-DD"); // Next Monday
 
   const all_info = useFetch(
-    "http://localhost:3001/all",
+    "https://viko-eif-lecture-timetable.onrender.com/all",
     getPayload(startDate, endDate, true),
     date
   );
 
   const current = useFetch(
-    "http://localhost:3001/current",
+    "https://viko-eif-lecture-timetable.onrender.com/current",
     getPayload(date, date),
     date
   );

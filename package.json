@@ -1,5 +1,5 @@
 {
-  "name": "VIKO_EIF_Timetable proxy server",
+  "name": "VIKO_EIF_Timetable_PROXY_SERVER",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
