@@ -51,8 +51,9 @@ const App = () => {
 
   const [currentDayLectureInfo, setCurrentDayLectureInfo] = useState([]);
 
-  const [currentGroupName, setCurrentGroupName] = useState("PI24");
+  const [currentGroupName, setCurrentGroupName] = useState("PI22E");
 
+  console.log(groups);
   useEffect(() => {
     if (all_info) {
       const allTeachers = all_info?.r.tables[0]?.data_rows;
@@ -140,9 +141,10 @@ const App = () => {
     const filtered = allPosts.filter((post) =>
       moment(post.date, "ddd MMM DD YYYY").isSame(targetDate, "day")
     );
-    const currentDayFilter = filtered.filter(
-      (post) => post.grupe.replace(/<[^>]*>/g, "") === currentGroupName
+    const currentDayFilter = filtered.filter((post) =>
+      post.grupe.replace(/<[^>]*>/g, "").includes(currentGroupName)
     );
+
     setFilteredPosts(currentDayFilter);
   }, [allPosts]); //allPosts
 

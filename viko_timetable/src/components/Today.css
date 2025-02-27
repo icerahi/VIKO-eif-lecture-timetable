@@ -3,33 +3,48 @@
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+  font-family: sans-serif;
+}
+.today-container button {
+  border: none;
+  padding: 10px 5px;
+  background-color: black;
+  color: white;
+  margin: 5px;
 }
 .timetable {
-  width: 80%;
-  height: 80vh;
-  background: white;
-  border-radius: 20px;
   width: 50%;
-  margin-top: 5%;
-  margin-right: 5%;
-  border: 10px solid black;
+  height: 80vh;
+  margin: 5%;
   position: relative;
+  /* From https://css.glass */
+  background: rgba(40, 35, 35, 0.25);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(2.8px);
+  -webkit-backdrop-filter: blur(2.8px);
+  border: 1px solid rgba(40, 35, 35, 1);
 }
 .camera-nosile {
   height: 30px;
   width: 120px;
-  background: black;
   margin: 10px auto;
-  border-radius: 20px;
+  /* From https://css.glass */
+  background: black;
+  border-radius: 15px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(2.8px);
+  -webkit-backdrop-filter: blur(2.8px);
+  border: 1px solid rgba(21, 21, 21, 1);
 }
 .lecture-container {
   /* position: absolute; */
-  margin: 3%;
+  margin: 0 auto;
   overflow: scroll;
-  width: 100%;
-  background: rgb(104, 50, 9);
+  width: 95%;
+  background: rgb(8, 8, 8);
   color: white;
-  border-radius: 10px 10px 0 0;
+  border-radius: 20px 20px 0 0;
 }
 .title-info {
   margin: 10px;
@@ -64,4 +79,10 @@
 .no-lecture {
   background-color: #aeb3b3;
   opacity: 0.33;
+}
+
+@media screen and (max-width: 768px) {
+  .timetable {
+    width: 100%;
+  }
 }

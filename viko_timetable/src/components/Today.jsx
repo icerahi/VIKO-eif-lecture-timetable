@@ -8,15 +8,15 @@ const Taday = ({
   setToday,
   setPrevDay,
 }) => {
-  console.log(changedLectures);
-
   const CheckLectureStatus = (lecture) => {
-    if (changedLectures.some((item) => item.paskaita === lecture.period)) {
-      console.log(item.auditorija);
-      return item.auditorija;
-      //have to fix this
+    if (changedLectures.some((item) => item.paskaita === lecture.periodno)) {
+      const lec = changedLectures.find((l) => l.paskaita === lecture.periodno);
+      console.log(lec.auditorija);
+      return lec.auditorija;
     }
   };
+  console.log(changedLectures);
+  console.log(lectures);
   return (
     <div className="today-container">
       <div>
@@ -51,12 +51,18 @@ const Taday = ({
                 <div>
                   <p>
                     Room-
-                    {CheckLectureStatus(lecture) !== "-" ? (
+                    {CheckLectureStatus(lecture) === "-" ? (
                       `${lecture.classroom}`
                     ) : (
                       <>
-                        <del>{lecture.class}</del>
-                        {CheckLectureStatus(lecture)}{" "}
+                        {CheckLectureStatus(lecture) ? (
+                          <>
+                            <del>{lecture.classroom} </del>
+                            {CheckLectureStatus(lecture)}
+                          </>
+                        ) : (
+                          `${lecture.classroom}`
+                        )}
                       </>
                     )}{" "}
                   </p>
