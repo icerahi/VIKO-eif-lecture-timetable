@@ -15,6 +15,15 @@ import {
 } from "./firebaseConfig";
 import Today from "./components/Today";
 
+// 🔹 Declare debounce function globally (outside the component)
+const debounce = (func, delay) => {
+  let timeout;
+  return (...args) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func(...args), delay);
+  };
+};
+
 const App = () => {
   //firebise
   const [latestPost, setLatestPost] = useState(null);
@@ -25,17 +34,15 @@ const App = () => {
   const startDate = moment().startOf("isoWeek").format("YYYY-MM-DD"); // Monday
   const endDate = moment().endOf("week").add(1, "day").format("YYYY-MM-DD"); // Next Monday
 
+  const API_URL = "http://localhost:3000";
+  // const API_URL = "https://viko-eif-lecture-timetable.onrender.com";
   const all_info = useFetch(
-    "https://viko-eif-lecture-timetable.onrender.com/all",
+    `${API_URL}/all`,
     getPayload(startDate, endDate, true),
     date
   );
 
-  const current = useFetch(
-    "https://viko-eif-lecture-timetable.onrender.com/current",
-    getPayload(date, date),
-    date
-  );
+  const current = useFetch(`${API_URL}/current`, getPayload(date, date), date);
 
   const [teachers, setTeachers] = useState([]);
   const [subjects, setSubjects] = useState([]);
@@ -43,6 +50,8 @@ const App = () => {
   const [groups, setGroups] = useState([]);
 
   const [currentDayLectureInfo, setCurrentDayLectureInfo] = useState([]);
+
+  const [currentGroupName, setCurrentGroupName] = useState("PI24");
 
   useEffect(() => {
     if (all_info) {
@@ -58,38 +67,39 @@ const App = () => {
     }
     if (current) {
       const extractCurrentDayLecturesInfo = () => {
-        const info = current?.r?.ttitems?.map((lec) => {
-          const [subject] = subjects.filter(({ id }) => id === lec.subjectid);
+        if (!current?.r?.ttitems) return [];
+        //conver arrays to map for O(1) lookup for better performance
+        const subjectMap = new Map(subjects.map((s) => [s.id, s]));
+        const classroomMap = new Map(classrooms.map((c) => [c.id, c]));
+        const teacherMap = new Map(teachers.map((t) => [t.id, t]));
 
-          const [classroom] = classrooms.filter(
-            ({ id }) => id === lec.classroomids[0]
-          );
+        const info = current.r.ttitems.map((lec) => ({
+          subject: subjectMap.get(lec.subjectid)?.short || "Unknown",
+          // const subject = subjects.find(({ id }) => id === lec.subjectid);
+          classroom:
+            classroomMap.get(lec.classroomids?.[0])?.short || "Unknown",
 
-          const date = lec.date;
-          const endtime = lec.endtime;
-          const starttime = lec.starttime;
-          const periodno = lec.uniperiod;
+          // const classroom = classrooms.find(
+          //   ({ id }) => id === lec.classroomids?.[0]
+          // );
+          teacher: teacherMap.get(lec.teacherids?.[0])?.short || "Unknown",
+          date: lec.date,
+          endtime: lec.endtime,
+          starttime: lec.starttime,
+          periodno: lec.uniperiod,
 
-          const [teacher] = teachers.filter(
-            ({ id }) => id == lec.teacherids[0]
-          );
-          const [colors] = lec.colors;
+          // const teacher = teachers.find(({ id }) => id == lec.teacherids[0]);
+          colors: lec.colors?.[0],
+        }));
 
-          return {
-            subject: subject?.short,
-            classroom: classroom?.short,
-            date,
-            endtime,
-            starttime,
-            periodno,
-            teacher: teacher?.short,
-            colors,
-          };
-        });
-        return info;
+        setCurrentDayLectureInfo(info);
       };
 
-      setCurrentDayLectureInfo(extractCurrentDayLecturesInfo());
+      //applying debounce(300ms delay) so users multiple reload can't effect
+      // const debouncedLectureInfo = debounce(extractCurrentDayLecturesInfo, 300);
+      // debouncedLectureInfo();
+
+      extractCurrentDayLecturesInfo();
     }
 
     //referece th "user-posts" in firebase
@@ -117,7 +127,10 @@ const App = () => {
       });
     };
     fetchFirebaseData();
-  }, [all_info, current]);
+
+    //clean debounce function optional
+    // return ()=>clearTimeout(debouncedLectureInfo)
+  }, [all_info, current, subjects, teachers]);
 
   useEffect(() => {
     const targetDate = moment().format("ddd MMM DD YYYY");
@@ -127,9 +140,11 @@ const App = () => {
     const filtered = allPosts.filter((post) =>
       moment(post.date, "ddd MMM DD YYYY").isSame(targetDate, "day")
     );
-
-    setFilteredPosts(filtered);
-  }, [allPosts]);
+    const currentDayFilter = filtered.filter(
+      (post) => post.grupe.replace(/<[^>]*>/g, "") === currentGroupName
+    );
+    setFilteredPosts(currentDayFilter);
+  }, [allPosts]); //allPosts
 
   const setToday = () => {
     setDate(moment().format("YYYY-MM-DD"));
@@ -140,11 +155,12 @@ const App = () => {
   const setPrevDay = () => {
     setDate(moment(date).subtract(1, "day").format("YYYY-MM-DD"));
   };
-  console.log(currentDayLectureInfo);
+
   return (
     <>
       <main>
         <Today
+          changedLectures={filteredPosts}
           setNextDay={setNextDay}
           setToday={setToday}
           setPrevDay={setPrevDay}

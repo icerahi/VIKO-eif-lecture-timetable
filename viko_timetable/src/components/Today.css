@@ -36,7 +36,7 @@
 }
 
 .lecture,
-.lecture1 {
+.no-lecture {
   background-color: red;
   color: black;
   padding: 2%;
@@ -48,19 +48,20 @@
   position: relative;
 }
 
-.lecture1::after {
+.no-lecture::after {
   content: "No lecture";
   position: absolute;
   text-align: center;
-  color: black;
+  color: rgb(251, 250, 250);
   top: 40%;
   left: 0;
   width: 100%;
   height: 2px;
   background-color: black;
+  font-weight: bolder;
   transform: rotate(5deg);
 }
-.lecture1 {
+.no-lecture {
   background-color: #aeb3b3;
   opacity: 0.33;
 }
