@@ -1,6 +1,9 @@
 import "./Today.css";
 
 const Taday = ({
+  groups,
+  setSelectCurrentGroup,
+  selectCurrentGroup,
   changedLectures,
   date,
   lectures,
@@ -15,14 +18,28 @@ const Taday = ({
       return lec.auditorija;
     }
   };
-  console.log(changedLectures);
-  console.log(lectures);
+
+  const handleGroupChange = (e) => {
+    const groupObj = JSON.parse(e.target.value);
+    setSelectCurrentGroup(groupObj);
+    localStorage.setItem("current_group", e.target.value);
+  };
+
   return (
     <div className="today-container">
       <div>
         <button onClick={setNextDay}>NextDay</button>
         <button onClick={setToday}>TodayDay</button>
         <button onClick={setPrevDay}>PreviousDay</button>
+        <select
+          onChange={handleGroupChange}
+          id=""
+          value={JSON.stringify(selectCurrentGroup)}
+        >
+          {groups.map((group) => (
+            <option value={JSON.stringify(group)}>{group?.short}</option>
+          ))}
+        </select>
       </div>
       <div className="timetable">
         <div className="camera-nosile"></div>

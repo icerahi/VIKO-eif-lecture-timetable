@@ -1,4 +1,4 @@
-export const getPayload = (datefrom, dateto, all = false) => {
+export const getPayload = (datefrom, dateto, all = false, groupId = "-910") => {
   if (all) {
     return {
       __args: [
@@ -98,7 +98,7 @@ export const getPayload = (datefrom, dateto, all = false) => {
           datefrom,
           dateto,
           table: "classes",
-          id: "-916",
+          id: groupId,
           showColors: true,
           showIgroupsInClasses: false,
           showOrig: true,

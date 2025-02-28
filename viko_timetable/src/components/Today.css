@@ -5,7 +5,8 @@
   align-items: center;
   font-family: sans-serif;
 }
-.today-container button {
+.today-container button,
+select {
   border: none;
   padding: 10px 5px;
   background-color: black;

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const useFetch = (URL, payload, date) => {
+const useFetch = (URL, payload, date, selectCurrentGroup) => {
   const [data, setData] = useState(null);
 
   useEffect(() => {
@@ -21,7 +21,7 @@ const useFetch = (URL, payload, date) => {
     () => {
       return (isMount = false);
     };
-  }, [URL, date]);
+  }, [URL, date, selectCurrentGroup]);
 
   return data;
 };

@@ -34,15 +34,13 @@ const App = () => {
   const startDate = moment().startOf("isoWeek").format("YYYY-MM-DD"); // Monday
   const endDate = moment().endOf("week").add(1, "day").format("YYYY-MM-DD"); // Next Monday
 
-  const API_URL = "http://localhost:3000";
-  // const API_URL = "https://viko-eif-lecture-timetable.onrender.com";
+  // const API_URL = "http://localhost:3000";
+  const API_URL = "https://viko-eif-lecture-timetable.onrender.com";
   const all_info = useFetch(
     `${API_URL}/all`,
     getPayload(startDate, endDate, true),
     date
   );
-
-  const current = useFetch(`${API_URL}/current`, getPayload(date, date), date);
 
   const [teachers, setTeachers] = useState([]);
   const [subjects, setSubjects] = useState([]);
@@ -51,9 +49,19 @@ const App = () => {
 
   const [currentDayLectureInfo, setCurrentDayLectureInfo] = useState([]);
 
-  const [currentGroupName, setCurrentGroupName] = useState("PI22E");
+  const [selectCurrentGroup, setSelectCurrentGroup] = useState(() => {
+    const savedGroup = localStorage.getItem("current_group");
+    return savedGroup ? JSON.parse(savedGroup) : { id: "-910", short: "PI24E" };
+  });
 
-  console.log(groups);
+  const current = useFetch(
+    `${API_URL}/current`,
+    getPayload(date, date, false, selectCurrentGroup.id),
+    date,
+    selectCurrentGroup.id
+  );
+
+  console.log(current);
   useEffect(() => {
     if (all_info) {
       const allTeachers = all_info?.r.tables[0]?.data_rows;
@@ -131,22 +139,24 @@ const App = () => {
 
     //clean debounce function optional
     // return ()=>clearTimeout(debouncedLectureInfo)
-  }, [all_info, current, subjects, teachers]);
+  }, [all_info, current, subjects, teachers, selectCurrentGroup]);
 
   useEffect(() => {
-    const targetDate = moment().format("ddd MMM DD YYYY");
+    const targetDate = moment(date, "YYYY-MM-DD").format("ddd MMM DD YYYY");
 
     //filter posts by date
 
     const filtered = allPosts.filter((post) =>
       moment(post.date, "ddd MMM DD YYYY").isSame(targetDate, "day")
     );
-    const currentDayFilter = filtered.filter((post) =>
-      post.grupe.replace(/<[^>]*>/g, "").includes(currentGroupName)
+    const currentDayFilter = filtered.filter(
+      (post) =>
+        post.grupe.replace(/<[^>]*>/g, "").includes(selectCurrentGroup.short)
+      //have to fix here
     );
-
+    console.log("currentday filter", filtered);
     setFilteredPosts(currentDayFilter);
-  }, [allPosts]); //allPosts
+  }, [allPosts, selectCurrentGroup]); //allPosts
 
   const setToday = () => {
     setDate(moment().format("YYYY-MM-DD"));
@@ -157,11 +167,14 @@ const App = () => {
   const setPrevDay = () => {
     setDate(moment(date).subtract(1, "day").format("YYYY-MM-DD"));
   };
-
+  console.log(currentDayLectureInfo);
   return (
     <>
       <main>
         <Today
+          groups={groups}
+          setSelectCurrentGroup={setSelectCurrentGroup}
+          selectCurrentGroup={selectCurrentGroup}
           changedLectures={filteredPosts}
           setNextDay={setNextDay}
           setToday={setToday}
