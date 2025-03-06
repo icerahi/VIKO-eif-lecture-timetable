@@ -1,5 +1,6 @@
 import "./Today.css";
-
+import moment from "moment";
+import viko_eif from "../viko_eif.jpg";
 const Taday = ({
   groups,
   setSelectCurrentGroup,
@@ -25,29 +26,30 @@ const Taday = ({
     localStorage.setItem("current_group", e.target.value);
   };
 
+  const checkDate = (date) => {
+    if (moment(date).isSame(moment(), "day")) {
+      return "Today, ";
+    } else if (moment(date).isSame(moment().add(1, "day"), "day")) {
+      return "Tomorrow, ";
+    } else if (moment(date).isSame(moment().subtract(1, "day"), "day")) {
+      return "Yesterday, ";
+    } else {
+      return;
+    }
+  };
   return (
     <div className="today-container">
-      <div>
-        <button onClick={setNextDay}>NextDay</button>
-        <button onClick={setToday}>TodayDay</button>
-        <button onClick={setPrevDay}>PreviousDay</button>
-        <select
-          onChange={handleGroupChange}
-          id=""
-          value={JSON.stringify(selectCurrentGroup)}
-        >
-          {groups.map((group) => (
-            <option value={JSON.stringify(group)}>{group?.short}</option>
-          ))}
-        </select>
-      </div>
       <div className="timetable">
         <div className="camera-nosile"></div>
         <div className="lecture-container">
           <h1 className="title-info">
-            Today, {date.format("ddd MMM DD YYYY")}
+            {checkDate(date)}
+            {date.format("ddd MMM DD YYYY")}
           </h1>
           <div className="lectures">
+            {lectures.length == 0 && (
+              <p>No lectures information available for the selected day!</p>
+            )}
             {lectures?.map((lecture) => (
               <div
                 key={lecture.periodno}
@@ -91,7 +93,23 @@ const Taday = ({
             ))}
           </div>
         </div>
+
+        <div className="btn-container">
+          <button onClick={setPrevDay}>PreviousDay</button>
+          <button onClick={setToday}>TodayDay</button>
+          <button onClick={setNextDay}>NextDay</button>
+          <select
+            onChange={handleGroupChange}
+            id=""
+            value={JSON.stringify(selectCurrentGroup)}
+          >
+            {groups.map((group) => (
+              <option value={JSON.stringify(group)}>{group?.short}</option>
+            ))}
+          </select>
+        </div>
       </div>
+      <div className="info-container"></div>
     </div>
   );
 };

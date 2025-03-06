@@ -182,6 +182,13 @@ const App = () => {
           date={moment(date, "YYYY-MM-DD")}
           lectures={currentDayLectureInfo}
         />
+        <marquee
+          behavior="slide"
+          style={{ textAlign: "center", fontWeight: "bolder" }}
+        >
+          Encountering any issues or have suggestions?{" "}
+          <a href="mailto:imranmdhasan07@gmail.com"> Let us know </a>
+        </marquee>
       </main>
     </>
   );

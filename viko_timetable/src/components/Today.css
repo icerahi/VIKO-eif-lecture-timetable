@@ -5,14 +5,7 @@
   align-items: center;
   font-family: sans-serif;
 }
-.today-container button,
-select {
-  border: none;
-  padding: 10px 5px;
-  background-color: black;
-  color: white;
-  margin: 5px;
-}
+
 .timetable {
   width: 50%;
   height: 80vh;
@@ -25,6 +18,24 @@ select {
   backdrop-filter: blur(2.8px);
   -webkit-backdrop-filter: blur(2.8px);
   border: 1px solid rgba(40, 35, 35, 1);
+  box-shadow: -8px -8px 1px rgba(2, 2, 2, 0.7);
+}
+.today-container button,
+select {
+  border: none;
+  padding: 10px 5px;
+  background-color: black;
+  color: white;
+  margin: 5px;
+  box-shadow: 5px 5px 5px rgba(2, 2, 2, 0.7);
+  cursor: pointer;
+}
+.btn-container {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content;
 }
 .camera-nosile {
   height: 30px;
@@ -46,6 +57,7 @@ select {
   background: rgb(8, 8, 8);
   color: white;
   border-radius: 20px 20px 0 0;
+  box-shadow: 10px 10px 10px gray;
 }
 .title-info {
   margin: 10px;
