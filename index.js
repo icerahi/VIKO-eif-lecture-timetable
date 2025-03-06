@@ -11,6 +11,12 @@ const MAIN_DB_URL =
 
 const CURRENT_URL =
   "https://vikoeif.edupage.org/timetable/server/currenttt.js?__func=curentttGetData";
+
+app.get("/", (req, res) => {
+  res.send("The proxy Server is running...");
+});
+
+
 app.post("/all", async (req, res) => {
   try {
     // Forward the request body to the external API
