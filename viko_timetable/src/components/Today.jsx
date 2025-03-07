@@ -1,6 +1,7 @@
 import "./Today.css";
 import moment from "moment";
 import viko_eif from "../viko_eif.jpg";
+import { lightenHexToRgb } from "../utils/lightenColor";
 const Taday = ({
   groups,
   setSelectCurrentGroup,
@@ -37,6 +38,7 @@ const Taday = ({
       return;
     }
   };
+
   return (
     <div className="today-container">
       <div className="timetable">
@@ -56,8 +58,11 @@ const Taday = ({
                 className={
                   CheckLectureStatus(lecture) === "-" ? "no-lecture" : "lecture"
                 }
-                style={{ backgroundColor: lecture.colors }}
+                style={{
+                  backgroundColor: lightenHexToRgb(lecture.colors, 0.4), // Lighten by 50%
+                }}
               >
+                {console.log(lecture.colors)}
                 <div>
                   <p>{lecture.periodno}</p>
                 </div>
