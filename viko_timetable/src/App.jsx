@@ -51,7 +51,9 @@ const App = () => {
 
   const [selectCurrentGroup, setSelectCurrentGroup] = useState(() => {
     const savedGroup = localStorage.getItem("current_group");
-    return savedGroup ? JSON.parse(savedGroup) : { id: "-910", short: "PI24E" };
+    return savedGroup
+      ? JSON.parse(savedGroup)
+      : { id: "-910", name: "PI24E", short: "PI24E" };
   });
 
   const current = useFetch(
