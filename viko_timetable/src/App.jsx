@@ -35,7 +35,8 @@ const App = () => {
   const endDate = moment().endOf("week").add(1, "day").format("YYYY-MM-DD"); // Next Monday
 
   // const API_URL = "http://localhost:3000";
-  const API_URL = "https://viko-eif-lecture-timetable.onrender.com";
+  // const API_URL = "https://viko-eif-lecture-timetable.onrender.com";
+  const API_URL = "https://overseas-vyky-icerahi-d9f7baf3.koyeb.app";
   const all_info = useFetch(
     `${API_URL}/all`,
     getPayload(startDate, endDate, true),

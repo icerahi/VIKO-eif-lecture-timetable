@@ -108,8 +108,10 @@ const Taday = ({
             id=""
             value={JSON.stringify(selectCurrentGroup)}
           >
-            {groups.map((group) => (
-              <option value={JSON.stringify(group)}>{group?.short}</option>
+            {groups.map((group, index) => (
+              <option key={index} value={JSON.stringify(group)}>
+                {group?.short}
+              </option>
             ))}
           </select>
         </div>
