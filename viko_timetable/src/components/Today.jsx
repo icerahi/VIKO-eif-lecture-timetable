@@ -20,7 +20,7 @@ const Taday = ({
       return lec.auditorija;
     }
   };
-
+  console.log("lectures:", lectures);
   const handleGroupChange = (e) => {
     const groupObj = JSON.parse(e.target.value);
     setSelectCurrentGroup(groupObj);
@@ -59,10 +59,9 @@ const Taday = ({
                   CheckLectureStatus(lecture) === "-" ? "no-lecture" : "lecture"
                 }
                 style={{
-                  backgroundColor: lightenHexToRgb(lecture.colors, 0.4), // Lighten by 50%
+                  backgroundColor: lightenHexToRgb(lecture?.colors, 0.4), // Lighten by 50%
                 }}
               >
-                {console.log(lecture.colors)}
                 <div>
                   <p>{lecture.periodno}</p>
                 </div>
