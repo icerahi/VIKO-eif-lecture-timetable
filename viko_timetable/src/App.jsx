@@ -63,8 +63,6 @@ const App = () => {
     date,
     selectCurrentGroup.id
   );
-
-  console.log(current);
   useEffect(() => {
     if (all_info) {
       const allTeachers = all_info?.r.tables[0]?.data_rows;
@@ -101,9 +99,10 @@ const App = () => {
           periodno: lec.uniperiod,
 
           // const teacher = teachers.find(({ id }) => id == lec.teacherids[0]);
-          colors: lec.colors?.[0],
+          colors: lec.colors?.[0] || "Unknown",
         }));
 
+        console.log("Info:", info);
         setCurrentDayLectureInfo(info);
       };
 
@@ -170,7 +169,7 @@ const App = () => {
   const setPrevDay = () => {
     setDate(moment(date).subtract(1, "day").format("YYYY-MM-DD"));
   };
-  console.log(currentDayLectureInfo);
+  console.log("current day lecture info:", currentDayLectureInfo);
   return (
     <>
       <main>
@@ -182,6 +181,7 @@ const App = () => {
           setNextDay={setNextDay}
           setToday={setToday}
           setPrevDay={setPrevDay}
+          x
           date={moment(date, "YYYY-MM-DD")}
           lectures={currentDayLectureInfo}
         />
