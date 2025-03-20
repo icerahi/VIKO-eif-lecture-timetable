@@ -82,7 +82,7 @@ const App = () => {
         const subjectMap = new Map(subjects.map((s) => [s.id, s]));
         const classroomMap = new Map(classrooms.map((c) => [c.id, c]));
         const teacherMap = new Map(teachers.map((t) => [t.id, t]));
-
+        console.log("test", current.r.ttitems);
         const info = current.r.ttitems.map((lec) => ({
           subject: subjectMap.get(lec.subjectid)?.short || "Unknown",
           // const subject = subjects.find(({ id }) => id === lec.subjectid);
@@ -99,10 +99,10 @@ const App = () => {
           periodno: lec.uniperiod,
 
           // const teacher = teachers.find(({ id }) => id == lec.teacherids[0]);
-          colors: lec.colors?.[0] || "Unknown",
+          colors: lec.colors?.[0] || "gray",
+          changed: lec.changed || false,
         }));
 
-        console.log("Info:", info);
         setCurrentDayLectureInfo(info);
       };
 

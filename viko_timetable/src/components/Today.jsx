@@ -16,8 +16,7 @@ const Taday = ({
   const CheckLectureStatus = (lecture) => {
     if (changedLectures.some((item) => item.paskaita === lecture.periodno)) {
       const lec = changedLectures.find((l) => l.paskaita === lecture.periodno);
-      console.log(lec.auditorija);
-      return lec.auditorija;
+      return { room: lec.auditorija, teacher: lec.destytojas };
     }
   };
   console.log("lectures:", lectures);
@@ -26,7 +25,7 @@ const Taday = ({
     setSelectCurrentGroup(groupObj);
     localStorage.setItem("current_group", e.target.value);
   };
-
+  console.log(changedLectures);
   const checkDate = (date) => {
     if (moment(date).isSame(moment(), "day")) {
       return "Today, ";
@@ -55,13 +54,18 @@ const Taday = ({
             {lectures?.map((lecture) => (
               <div
                 key={lecture.periodno}
-                className={
-                  CheckLectureStatus(lecture) === "-" ? "no-lecture" : "lecture"
-                }
+                className={`${
+                  CheckLectureStatus(lecture)?.room === "-"
+                    ? "no-lecture"
+                    : "lecture"
+                } ${lecture.changed && "info"}`}
                 style={{
+                  "--changed-info": `Changed! Check out teacher for more details!`,
+                  "--lecture-info": `"${CheckLectureStatus(lecture)?.teacher}"`,
                   backgroundColor: lightenHexToRgb(lecture?.colors, 0.4), // Lighten by 50%
                 }}
               >
+                {console.log(lecture)}
                 <div>
                   <p>{lecture.periodno}</p>
                 </div>
@@ -74,14 +78,14 @@ const Taday = ({
                 <div>
                   <p>
                     Room-
-                    {CheckLectureStatus(lecture) === "-" ? (
+                    {CheckLectureStatus(lecture)?.room === "-" ? (
                       `${lecture.classroom}`
                     ) : (
                       <>
-                        {CheckLectureStatus(lecture) ? (
+                        {CheckLectureStatus(lecture)?.room ? (
                           <>
                             <del>{lecture.classroom} </del>
-                            {CheckLectureStatus(lecture)}
+                            {CheckLectureStatus(lecture)?.room}
                           </>
                         ) : (
                           `${lecture.classroom}`
