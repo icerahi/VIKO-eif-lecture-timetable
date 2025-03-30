@@ -1,6 +1,5 @@
 import "./Today.css";
 import moment from "moment";
-import viko_eif from "../viko_eif.jpg";
 import { lightenHexToRgb } from "../utils/lightenColor";
 import toast, { Toaster } from "react-hot-toast";
 import { useClipboard } from "@custom-react-hooks/use-clipboard";
