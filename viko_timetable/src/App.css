@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+@import "tailwindcss" important;
 
 * {
   padding: 0;
@@ -15,3 +16,17 @@ main {
   background-size: cover;
   background-position: top;
 }
+
+@layer components {
+  .btn-primary {
+    @apply text-sm sm:text-lg px-1 sm:px-2 py-2 bg-black rounded text-white m-1 shadow-[5px_5px_10px_rgba(2,2,2,0.7)];
+  }
+}
+/* {
+  border: none;
+  padding: 10px 5px;
+  color: black;
+  margin: 5px;
+  box-shadow: 5px 5px 5px rgba(2, 2, 2, 0.7);
+  cursor: pointer;
+} */

@@ -3,7 +3,7 @@ import useFetch from "./useFetch";
 import { getPayload } from "./payloads";
 import moment from "moment";
 import "./App.css";
-
+import { Route, Routes, useSearchParams } from "react-router-dom";
 //firbase config
 import {
   db,
@@ -24,12 +24,23 @@ const debounce = (func, delay) => {
   };
 };
 
+const getDayByParam = (param) => {
+  if (param && !isNaN(param)) {
+    return Number(param);
+  }
+};
 const App = () => {
+  //search params
+  const [searchParams, setSearchParams] = useSearchParams();
+
   //firebise
   const [latestPost, setLatestPost] = useState(null);
   const [allPosts, setAllPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
-  const [date, setDate] = useState(moment().format("YYYY-MM-DD"));
+  const [date, setDate] = useState(() => {
+    const day = getDayByParam(searchParams.get("day")) || 0;
+    return moment().add(day, "days").format("YYYY-MM-DD");
+  });
 
   const startDate = moment().startOf("isoWeek").format("YYYY-MM-DD"); // Monday
   const endDate = moment().endOf("week").add(1, "day").format("YYYY-MM-DD"); // Next Monday
@@ -46,7 +57,10 @@ const App = () => {
   const [teachers, setTeachers] = useState([]);
   const [subjects, setSubjects] = useState([]);
   const [classrooms, setClassRooms] = useState([]);
-  const [groups, setGroups] = useState([]);
+  const [groups, setGroups] = useState(() => {
+    const groups = localStorage.getItem("groups");
+    return groups ? JSON.parse(groups) : [];
+  });
 
   const [currentDayLectureInfo, setCurrentDayLectureInfo] = useState([]);
 
@@ -74,6 +88,7 @@ const App = () => {
       setSubjects(allSubjects);
       setClassRooms(allClassrooms);
       setGroups(allGroups);
+      localStorage.setItem("groups", JSON.stringify(allGroups));
     }
     if (current) {
       const extractCurrentDayLecturesInfo = () => {
@@ -161,37 +176,55 @@ const App = () => {
   }, [allPosts, selectCurrentGroup]); //allPosts
 
   const setToday = () => {
+    setSearchParams({});
     setDate(moment().format("YYYY-MM-DD"));
   };
   const setNextDay = () => {
+    const currentDay = parseInt(searchParams.get("day")) || 0;
+    setSearchParams({ day: currentDay + 1 });
+
     setDate(moment(date).add(1, "day").format("YYYY-MM-DD"));
   };
   const setPrevDay = () => {
+    const currentDay = parseInt(searchParams.get("day")) || 0;
+    setSearchParams({ day: currentDay - 1 });
     setDate(moment(date).subtract(1, "day").format("YYYY-MM-DD"));
   };
-  console.log("current day lecture info:", currentDayLectureInfo);
+
   return (
     <>
       <main>
-        <Today
-          groups={groups}
-          setSelectCurrentGroup={setSelectCurrentGroup}
-          selectCurrentGroup={selectCurrentGroup}
-          changedLectures={filteredPosts}
-          setNextDay={setNextDay}
-          setToday={setToday}
-          setPrevDay={setPrevDay}
-          x
-          date={moment(date, "YYYY-MM-DD")}
-          lectures={currentDayLectureInfo}
-        />
-        <marquee
-          behavior="slide"
-          style={{ textAlign: "center", fontWeight: "bolder" }}
-        >
-          Encountering any issues or have suggestions?{" "}
-          <a href="mailto:imranmdhasan07@gmail.com"> Let us know </a>
-        </marquee>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Today
+                groups={groups}
+                setSelectCurrentGroup={setSelectCurrentGroup}
+                selectCurrentGroup={selectCurrentGroup}
+                changedLectures={filteredPosts}
+                setNextDay={setNextDay}
+                setToday={setToday}
+                setPrevDay={setPrevDay}
+                date={moment(date, "YYYY-MM-DD")}
+                lectures={currentDayLectureInfo}
+              />
+            }
+          />
+        </Routes>
+
+        <footer className="text-center text-sm fixed bottom-0 w-1/1 p-1 bg-gray-500 text-white">
+          <em className="opacity-50">
+            Made with ❤️ by{" "}
+            <a
+              className="underline"
+              target="_blank"
+              href="https://github.com/icerahi"
+            >
+              Imran
+            </a>
+          </em>
+        </footer>
       </main>
     </>
   );

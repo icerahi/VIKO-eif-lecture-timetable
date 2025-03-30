@@ -19,23 +19,16 @@
   border: 1px solid rgba(40, 35, 35, 1);
   box-shadow: -8px -8px 1px rgba(2, 2, 2, 0.7);
 }
-.today-container button,
+/* .today-container button,
 select {
   border: none;
   padding: 10px 5px;
-  background-color: black;
-  color: white;
+  color: black;
   margin: 5px;
   box-shadow: 5px 5px 5px rgba(2, 2, 2, 0.7);
   cursor: pointer;
-}
-.btn-container {
-  position: fixed;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: max-content;
-}
+} */
+
 .camera-nosile {
   height: 30px;
   width: 120px;

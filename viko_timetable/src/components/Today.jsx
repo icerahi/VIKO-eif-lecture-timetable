@@ -2,6 +2,9 @@ import "./Today.css";
 import moment from "moment";
 import viko_eif from "../viko_eif.jpg";
 import { lightenHexToRgb } from "../utils/lightenColor";
+import toast, { Toaster } from "react-hot-toast";
+import { useClipboard } from "@custom-react-hooks/use-clipboard";
+import copyIcon from "../../assets/copytoclipboard.png";
 const Taday = ({
   groups,
   setSelectCurrentGroup,
@@ -13,19 +16,21 @@ const Taday = ({
   setToday,
   setPrevDay,
 }) => {
+  const { copyToClipboard } = useClipboard();
+
   const CheckLectureStatus = (lecture) => {
     if (changedLectures.some((item) => item.paskaita === lecture.periodno)) {
       const lec = changedLectures.find((l) => l.paskaita === lecture.periodno);
       return { room: lec.auditorija, teacher: lec.destytojas };
     }
   };
-  console.log("lectures:", lectures);
+
   const handleGroupChange = (e) => {
     const groupObj = JSON.parse(e.target.value);
     setSelectCurrentGroup(groupObj);
     localStorage.setItem("current_group", e.target.value);
   };
-  console.log(changedLectures);
+
   const checkDate = (date) => {
     if (moment(date).isSame(moment(), "day")) {
       return "Today, ";
@@ -38,15 +43,35 @@ const Taday = ({
     }
   };
 
+  const handleShare = () => {
+    copyToClipboard(window.location.href);
+    toast.success(`Copied: ${window.location.href}`, {
+      duration: 1000,
+      position: "top-center",
+    });
+  };
+
   return (
     <div className="today-container">
       <div className="timetable">
         <div className="camera-nosile"></div>
+
         <div className="lecture-container">
-          <h1 className="title-info">
-            {checkDate(date)}
-            {date.format("ddd MMM DD YYYY")}
-          </h1>
+          <div className="flex justify-between items-center">
+            <h1 className="title-info text-2xl">
+              {checkDate(date)}
+              {date.format("ddd MMM DD YYYY")}
+            </h1>
+            {/* copy button  */}
+            <button
+              className="btn-primary border-0 hover:scale-125 transition-all duration-500"
+              title={`Copy to clipboard`}
+              onClick={handleShare}
+            >
+              <img width={30} src={copyIcon} />
+            </button>
+          </div>
+
           <div className="lectures">
             {lectures.length == 0 && (
               <p>No lectures information available for the selected day!</p>
@@ -70,7 +95,7 @@ const Taday = ({
                   <p>{lecture.periodno}</p>
                 </div>
                 <div>
-                  <h3>{lecture.subject}</h3>
+                  <h3 className="font-bold">{lecture.subject}</h3>
                   <p>
                     {lecture.starttime} - {lecture.endtime}
                   </p>
@@ -102,11 +127,27 @@ const Taday = ({
           </div>
         </div>
 
-        <div className="btn-container">
-          <button onClick={setPrevDay}>PreviousDay</button>
-          <button onClick={setToday}>TodayDay</button>
-          <button onClick={setNextDay}>NextDay</button>
+        <div className="flex justify-center items-center fixed bottom-0 left-1/2 translate-x-[-50%] w-[max-content]">
+          <button
+            className="btn-primary  hover:scale-105 transition-all duration-500"
+            onClick={setPrevDay}
+          >
+            PreviousDay
+          </button>
+          <button
+            className="btn-primary  hover:scale-105 transition-all duration-500"
+            onClick={setToday}
+          >
+            TodayDay
+          </button>
+          <button
+            className="btn-primary hover:scale-105 transition-all duration-500"
+            onClick={setNextDay}
+          >
+            NextDay
+          </button>
           <select
+            className="btn-primary hover:scale-105 transition-all duration-500"
             onChange={handleGroupChange}
             id=""
             value={JSON.stringify(selectCurrentGroup)}
@@ -120,6 +161,7 @@ const Taday = ({
         </div>
       </div>
       <div className="info-container"></div>
+      <Toaster />
     </div>
   );
 };
