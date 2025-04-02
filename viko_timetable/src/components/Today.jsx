@@ -1,7 +1,7 @@
 import "./Today.css";
 import moment from "moment";
 import { lightenHexToRgb } from "../utils/lightenColor";
-import toast, { Toaster } from "react-hot-toast";
+import { ToastContainer, toast, Bounce } from "react-toastify";
 import { useClipboard } from "@custom-react-hooks/use-clipboard";
 import copyIcon from "../../assets/copytoclipboard.png";
 const Taday = ({
@@ -44,10 +44,21 @@ const Taday = ({
 
   const handleShare = () => {
     copyToClipboard(window.location.href);
-    toast.success(`Copied: ${window.location.href}`, {
-      duration: 1000,
-      position: "top-center",
-    });
+    toast.success(
+      `Copied to your clip board! 
+       ${window.location.href}`,
+      {
+        position: "top-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      }
+    );
   };
 
   return (
@@ -160,7 +171,7 @@ const Taday = ({
         </div>
       </div>
       <div className="info-container"></div>
-      <Toaster />
+      <ToastContainer />
     </div>
   );
 };
