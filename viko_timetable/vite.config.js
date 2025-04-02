@@ -12,7 +12,7 @@ export default defineConfig({
       registerType: "autoUpdate",
       manifest: {
         name: "VIKO EIF Timetable",
-        short_name: "PWA App",
+        short_name: "VIKO EIF Timatable",
         description: "A simple PWA using React and Vite",
         theme_color: "#ffffff",
         icons: [
