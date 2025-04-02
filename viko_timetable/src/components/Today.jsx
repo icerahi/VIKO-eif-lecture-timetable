@@ -42,20 +42,39 @@ const Taday = ({
     }
   };
 
-  const handleShare = () => {
-    copyToClipboard(window.location.href);
-    toast.success(`Copied to your clip board! \n${window.location.href}`, {
-      style: { whiteSpace: "pre-line" },
-      position: "top-left",
-      autoClose: 4000,
-      hideProgressBar: false,
-      closeOnClick: false,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      transition: Bounce,
-    });
+  const handleShare = async () => {
+    // Check if Web Share API is available (for mobile users)
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: "VIKO EIF Timetable App",
+          text: `Lecture schedule for ${date.format("ddd MMM DD YYYY")}`,
+          url: window.location.href,
+        });
+        console.log("Shared successfully!");
+      } catch (error) {
+        console.error("Error sharing:", error);
+      }
+    } else {
+      // Fallback for desktop or unsupported mobile browsers: Copy the link to clipboard
+      try {
+        copyToClipboard(window.location.href);
+        toast.success(`Copied to your clip board! \n${window.location.href}`, {
+          style: { whiteSpace: "pre-line" },
+          position: "top-left",
+          autoClose: 4000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+      } catch (error) {
+        console.error("Error copying:", error);
+      }
+    }
   };
 
   return (
