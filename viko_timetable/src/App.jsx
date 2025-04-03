@@ -173,13 +173,6 @@ const App = () => {
     );
     console.log("currentday filter", filtered);
     setFilteredPosts(currentDayFilter);
-
-    document
-      .querySelector('meta[property="og:image"]')
-      .setAttribute(
-        "content",
-        `https://overseas-vyky-icerahi-d9f7baf3.koyeb.app/screenshot?url=${window.location.href}`
-      );localStorage
   }, [allPosts, selectCurrentGroup]); //allPosts
 
   const setToday = () => {

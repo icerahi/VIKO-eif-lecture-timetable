@@ -4,7 +4,9 @@ import { lightenHexToRgb } from "../utils/lightenColor";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import { useClipboard } from "@custom-react-hooks/use-clipboard";
 import copyIcon from "../../assets/copytoclipboard.png";
-import { useEffect } from "react";
+import html2canvas from "html2canvas";
+import { useRef } from "react";
+
 const Taday = ({
   groups,
   setSelectCurrentGroup,
@@ -17,6 +19,7 @@ const Taday = ({
   setPrevDay,
 }) => {
   const { copyToClipboard } = useClipboard();
+  const captureRef = useRef(null);
 
   const CheckLectureStatus = (lecture) => {
     if (changedLectures.some((item) => item.paskaita === lecture.periodno)) {
@@ -44,6 +47,23 @@ const Taday = ({
   };
 
   const handleShare = async () => {
+    let file = null;
+    let imageUrl = "";
+
+    if (captureRef.current) {
+      try {
+        //take screenshot
+        const canvas = await html2canvas(captureRef.current);
+        imageUrl = canvas.toDataURL("image/png");
+
+        //convert to file
+        const blob = await (await fetch(imageUrl)).blob();
+        file = new File([blob], "preview.png", { type: "image/png" });
+      } catch (error) {
+        console.error("Screenshot captured failed:", error);
+      }
+    }
+
     // Check if Web Share API is available (for mobile users)
     if (navigator.share) {
       try {
@@ -51,6 +71,7 @@ const Taday = ({
           title: "VIKO EIF Timetable App",
           text: `Lecture schedule for ${date.format("ddd MMM DD YYYY")}`,
           url: window.location.href,
+          files: file ? [file] : [],
         });
         console.log("Shared successfully!");
       } catch (error) {
@@ -60,7 +81,7 @@ const Taday = ({
       // Fallback for desktop or unsupported mobile browsers: Copy the link to clipboard
       try {
         copyToClipboard(window.location.href);
-        toast.success(`Copied to your clip board! \n${window.location.href}`, {
+        toast.success(`Copied to your clipboard! \n${window.location.href}`, {
           style: { whiteSpace: "pre-line" },
           position: "top-left",
           autoClose: 4000,
@@ -83,7 +104,7 @@ const Taday = ({
       <div className="timetable">
         <div className="camera-nosile"></div>
 
-        <div className="lecture-container">
+        <div ref={captureRef} className="lecture-container">
           <div className="flex justify-between items-center">
             <h1 className="title-info text-2xl">
               {checkDate(date)}
