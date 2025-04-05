@@ -79,23 +79,20 @@ const Taday = ({
       }
     } else {
       // Fallback for desktop or unsupported mobile browsers: Copy the link to clipboard
-      try {
-        copyToClipboard(window.location.href);
-        toast.success(`Copied to your clip board! \n${window.location.href}`, {
-          style: { whiteSpace: "pre-line" },
-          position: "top-left",
-          autoClose: 4000,
-          hideProgressBar: false,
-          closeOnClick: false,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          transition: Zoom,
-        });
-      } catch (error) {
-        console.error("Error copying:", error);
-      }
+
+      copyToClipboard(window.location.href);
+      toast.success(`Copied to your clip board! \n${window.location.href}`, {
+        style: { whiteSpace: "pre-line" },
+        position: "top-left",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Zoom,
+      });
     }
   };
 
@@ -210,7 +207,6 @@ const Taday = ({
       <div className="info-container">
         {!isInstalled && <InstallPWAButton />}
       </div>
-      <ToastContainer />
     </div>
   );
 };
