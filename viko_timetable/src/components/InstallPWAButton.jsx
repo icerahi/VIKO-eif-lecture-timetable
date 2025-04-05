@@ -38,10 +38,27 @@ const InstallPWAButton = () => {
   }, []);
 
   const handleInstall = async () => {
-    if (!deferredPrompt) return;
+    if (!deferredPrompt) {
+      toast.info(
+        "App already installed in your device. Please check your Applist!",
+        {
+          position: "top-center",
+          autoClose: true,
+          hideProgressBar: true,
+          closeOnClick: false,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          transition: Zoom,
+        }
+      );
+      return;
+    }
     deferredPrompt.prompt(); // show the install prompt
 
     const { outcome } = await deferredPrompt.userChoice;
+    console.log(outcome);
     if (outcome === "accepted") {
       console.log("User accepted the install");
     } else {
@@ -56,8 +73,8 @@ const InstallPWAButton = () => {
     toast.info(
       <div className="flex flex-col gap-2 items-center ">
         <p className="text-sm">
-          Tap <strong>Share</strong> ⬆️ then <strong>Add to Home Screen</strong>{" "}
-          (only in safari)
+          Tap <strong>Share</strong> ⬆️ then{" "}
+          <strong>Add to Home Screen or Add to Dock</strong>{" "}
         </p>
         <img
           src={iphoneGuide}
@@ -73,16 +90,15 @@ const InstallPWAButton = () => {
         </button>
       </div>,
       {
-        position: "top-center",
+        position: "bottom-center",
         autoClose: false,
         hideProgressBar: true,
         closeOnClick: false,
         pauseOnHover: false,
         draggable: true,
         progress: undefined,
-        theme: "dark",
+        theme: "light",
         transition: Zoom,
-        limit: 1,
       }
     );
   };
@@ -109,10 +125,10 @@ const InstallPWAButton = () => {
 
       <ToastContainer
         toastClassName="text-white rounded-lg shadow-lg "
+        limit={1}
         bodyClassName="text-sm"
         hideProgressBar
         closeOnClick
-        pauseOnFocusLoss
         draggable={false}
       />
     </div>

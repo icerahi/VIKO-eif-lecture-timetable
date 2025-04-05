@@ -1,7 +1,7 @@
 import "./Today.css";
 import moment from "moment";
 import { lightenHexToRgb } from "../utils/lightenColor";
-import { ToastContainer, toast, Bounce } from "react-toastify";
+import { ToastContainer, toast, Bounce, Zoom } from "react-toastify";
 import { useClipboard } from "@custom-react-hooks/use-clipboard";
 import copyIcon from "../../assets/copytoclipboard.png";
 import InstallPWAButton from "./InstallPWAButton";
@@ -80,7 +80,7 @@ const Taday = ({
           draggable: true,
           progress: undefined,
           theme: "light",
-          transition: Bounce,
+          transition: Zoom,
         });
       } catch (error) {
         console.error("Error copying:", error);
@@ -89,7 +89,7 @@ const Taday = ({
   };
 
   return (
-    <div className="flex sm:flex-row-reverse flex-wrap justify-between items-center">
+    <div className="flex sm:flex-row-reverse flex-wrap justify-center items-center">
       <div className="timetable w-1/1 sm:w-1/2">
         {/* <div className="camera-nosile"></div> */}
         <div className="lecture-container mt-3">
