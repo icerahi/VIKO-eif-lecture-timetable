@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { toast, ToastContainer, Zoom } from "react-toastify";
 import iphoneGuide from "../../assets/install_iphone.png";
+import { useContext } from "react";
+import { AppContext } from "../context/AppContext";
 const InstallPWAButton = () => {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [isAppleDevice, setIsAppleDevice] = useState(false);
+
   useEffect(() => {
     //Detect IOS safari
     const userAgent = window.navigator.userAgent.toLowerCase();
