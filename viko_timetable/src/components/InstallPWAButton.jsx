@@ -77,7 +77,7 @@ const InstallPWAButton = () => {
   const handleInstallIOS = () => {
     toast.info(
       <div className="flex flex-col gap-2 items-center ">
-        <p className="text-sm">
+        <p className="text-sm text-gray-500">
           Tap <strong>Share</strong> ⬆️ then{" "}
           <strong>Add to Home Screen or Add to Dock</strong>{" "}
         </p>

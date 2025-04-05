@@ -103,7 +103,7 @@ const Taday = ({
         {/* <div className="camera-nosile"></div> */}
         <div className="lecture-container mt-3">
           <div className="flex justify-between items-center">
-            <h1 className="title-info text-2xl">
+            <h1 className="title-info text-2xl text-gray-50">
               {checkDate(date)}
               {date.format("ddd MMM DD YYYY")}
             </h1>
