@@ -5,6 +5,7 @@ import { ToastContainer, toast, Bounce } from "react-toastify";
 import { useClipboard } from "@custom-react-hooks/use-clipboard";
 import copyIcon from "../../assets/copytoclipboard.png";
 import InstallPWAButton from "./InstallPWAButton";
+import { useEffect, useState } from "react";
 const Taday = ({
   groups,
   setSelectCurrentGroup,
@@ -17,6 +18,7 @@ const Taday = ({
   setPrevDay,
 }) => {
   const { copyToClipboard } = useClipboard();
+  const [isInstalled, setIsInstalled] = useState(false);
 
   const CheckLectureStatus = (lecture) => {
     if (changedLectures.some((item) => item.paskaita === lecture.periodno)) {
@@ -42,6 +44,14 @@ const Taday = ({
       return;
     }
   };
+
+  useEffect(() => {
+    let isInstalled =
+      window.matchMedia("(display-mode:standalone").matches ||
+      window.navigator.standalone === true; // check for android or ios
+    console.log(isInstalled);
+    setIsInstalled(isInstalled);
+  }, []);
 
   const handleShare = async () => {
     // Check if Web Share API is available (for mobile users)
@@ -79,10 +89,7 @@ const Taday = ({
   };
 
   return (
-    <div className="today-container">
-      <div>
-        <InstallPWAButton />
-      </div>
+    <div className="flex sm:flex-row-reverse flex-wrap justify-between items-center">
       <div className="timetable w-1/1 sm:w-1/2">
         {/* <div className="camera-nosile"></div> */}
         <div className="lecture-container mt-3">
@@ -189,7 +196,9 @@ const Taday = ({
           </select>
         </div>
       </div>
-      <div className="info-container"></div>
+      <div className="info-container">
+        {!isInstalled && <InstallPWAButton />}
+      </div>
       <ToastContainer />
     </div>
   );

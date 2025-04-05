@@ -3,8 +3,6 @@ import { toast, ToastContainer, Zoom } from "react-toastify";
 import iphoneGuide from "../../assets/install_iphone.png";
 const InstallPWAButton = () => {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
-  const [showInstallButton, setShowInstallButton] = useState(false);
-  const [isIOS, setIsIOS] = useState(false);
 
   useEffect(() => {
     //Detect IOS safari
@@ -21,10 +19,6 @@ const InstallPWAButton = () => {
       userAgent.includes("safari") &&
       !userAgent.includes("chrome") &&
       !userAgent.includes("firebox");
-
-    if (isIOS && isSafari) {
-      setIsIOS(true);
-    }
 
     //handle beforeinstallpropt event for Android & Desktop
 
@@ -62,7 +56,8 @@ const InstallPWAButton = () => {
     toast.info(
       <div className="flex flex-col gap-2 items-center ">
         <p className="text-sm">
-          Tap <strong>Share</strong> ⬆️ then <strong>Add to Home Screen</strong>
+          Tap <strong>Share</strong> ⬆️ then <strong>Add to Home Screen</strong>{" "}
+          (only in safari)
         </p>
         <img
           src={iphoneGuide}
@@ -93,27 +88,27 @@ const InstallPWAButton = () => {
   };
 
   return (
-    <div className="flex lg:flex-col gap-2 justify-center mt-2 items-center lg:scale-150 w-100">
+    <div className="flex lg:flex-col gap-1 justify-center mt-2 items-center lg:scale-150 w-100">
       {/* show install button for android and desktop */}
-      <h1 className="text-xl italic px-2 bg-amber-700 text-gray-50">
+      <h1 className=" text-sm italic px-2 bg-amber-700 text-gray-50">
         Install {"in/>"}{" "}
       </h1>
 
       <button
         onClick={handleInstall}
-        className="  bg-indigo-400 text-gray-50 font-bold p-2 rounded"
+        className=" text-sm bg-indigo-400 text-gray-50 font-bold p-1 rounded"
       >
-        🤖 Android
+        🤖 Android / Desktop
       </button>
       <button
         onClick={handleInstallIOS}
-        className="  bg-indigo-400 text-gray-50 font-bold p-2 rounded"
+        className=" text-sm bg-indigo-400 text-gray-50 font-bold p-1 rounded"
       >
-         IOS Safari
+         IOS / MAC
       </button>
 
       <ToastContainer
-        toastClassName="text-white rounded-lg shadow-lg"
+        toastClassName="text-white rounded-lg shadow-lg "
         bodyClassName="text-sm"
         hideProgressBar
         closeOnClick
