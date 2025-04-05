@@ -49,8 +49,17 @@ const Taday = ({
     let isInstalled =
       window.matchMedia("(display-mode:standalone").matches ||
       window.navigator.standalone === true; // check for android or ios
-    console.log(isInstalled);
     setIsInstalled(isInstalled);
+
+    const handleAppInstalled = () => {
+      toast.success(
+        "✅ App installed! Open it from your Home Screen or App Launcher."
+      );
+      window.addEventListener("appinstalled", handleAppInstalled);
+      return () => {
+        window.removeEventListener("appinstalled", handleAppInstalled);
+      };
+    };
   }, []);
 
   const handleShare = async () => {
