@@ -8,6 +8,7 @@ import InstallPWAButton from "./InstallPWAButton";
 import { useEffect, useState } from "react";
 import { useContext } from "react";
 import { AppContext } from "../context/AppContext";
+
 const Taday = ({
   groups,
   setSelectCurrentGroup,

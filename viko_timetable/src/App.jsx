@@ -24,11 +24,6 @@ const debounce = (func, delay) => {
   };
 };
 
-const getDayByParam = (param) => {
-  if (param && !isNaN(param)) {
-    return Number(param);
-  }
-};
 const App = () => {
   //search params
   const [searchParams, setSearchParams] = useSearchParams();
@@ -38,8 +33,9 @@ const App = () => {
   const [allPosts, setAllPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
   const [date, setDate] = useState(() => {
-    const day = getDayByParam(searchParams.get("day")) || 0;
-    return moment().add(day, "days").format("YYYY-MM-DD");
+    const date = searchParams.get("date") || moment();
+
+    return moment(date).format("YYYY-MM-DD");
   });
 
   const startDate = moment().startOf("isoWeek").format("YYYY-MM-DD"); // Monday
