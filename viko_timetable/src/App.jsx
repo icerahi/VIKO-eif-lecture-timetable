@@ -169,22 +169,28 @@ const App = () => {
     );
     console.log("currentday filter", filtered);
     setFilteredPosts(currentDayFilter);
+
+    // set current date for home url
+    searchParams.get("date") || setSearchParams({ date: date });
   }, [allPosts, selectCurrentGroup]); //allPosts
 
   const setToday = () => {
-    setSearchParams({});
-    setDate(moment().format("YYYY-MM-DD"));
+    const date = moment().format("YYYY-MM-DD");
+    setSearchParams({ date });
+    setDate(date);
   };
   const setNextDay = () => {
-    const currentDay = parseInt(searchParams.get("day")) || 0;
-    setSearchParams({ day: currentDay + 1 });
+    const date = searchParams.get("date") || moment();
+    const nextDate = moment(date).add(1, "days").format("YYYY-MM-DD");
+    setSearchParams({ date: nextDate });
 
-    setDate(moment(date).add(1, "day").format("YYYY-MM-DD"));
+    setDate(nextDate);
   };
   const setPrevDay = () => {
-    const currentDay = parseInt(searchParams.get("day")) || 0;
-    setSearchParams({ day: currentDay - 1 });
-    setDate(moment(date).subtract(1, "day").format("YYYY-MM-DD"));
+    const date = searchParams.get("date") || moment();
+    const prevDate = moment(date).subtract(1, "days").format("YYYY-MM-DD");
+    setSearchParams({ date: prevDate });
+    setDate(prevDate);
   };
 
   return (
