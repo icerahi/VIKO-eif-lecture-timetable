@@ -3,22 +3,20 @@ import { toast, ToastContainer, Zoom } from "react-toastify";
 import iphoneGuide from "../../assets/install_iphone.png";
 const InstallPWAButton = () => {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
-
+  const [isAppleDevice, setIsAppleDevice] = useState(false);
   useEffect(() => {
     //Detect IOS safari
     const userAgent = window.navigator.userAgent.toLowerCase();
-
     //check if device is an IOS device(iphone,ipad,ipod)
     const isIOS =
       userAgent.includes("iphone") ||
       userAgent.includes("ipad") ||
-      userAgent.includes("ipod");
+      userAgent.includes("ipod") ||
+      console.log(userAgent);
 
-    // check if browser is safari (but not the chrome or other browser)
-    const isSafari =
-      userAgent.includes("safari") &&
-      !userAgent.includes("chrome") &&
-      !userAgent.includes("firebox");
+    console.log(isIOS);
+
+    setIsAppleDevice(isIOS);
 
     //handle beforeinstallpropt event for Android & Desktop
 
@@ -38,21 +36,25 @@ const InstallPWAButton = () => {
   }, []);
 
   const handleInstall = async () => {
+    const message = isAppleDevice
+      ? "Come on dude! This option is for Android/Linux/Windows Users 😉"
+      : "App already installed in your device. Please check your Applist!";
+
     if (!deferredPrompt) {
-      toast.info(
-        "App already installed in your device. Please check your Applist!",
-        {
-          position: "top-center",
-          autoClose: true,
-          hideProgressBar: true,
-          closeOnClick: false,
-          pauseOnHover: false,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-          transition: Zoom,
-        }
-      );
+      console.log(isAppleDevice);
+
+      toast.info(message, {
+        toastId: "android",
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Zoom,
+      });
       return;
     }
     deferredPrompt.prompt(); // show the install prompt
@@ -90,10 +92,11 @@ const InstallPWAButton = () => {
         </button>
       </div>,
       {
+        toastId: "ios",
         position: "bottom-center",
         autoClose: false,
         hideProgressBar: true,
-        closeOnClick: false,
+        closeOnClick: true,
         pauseOnHover: false,
         draggable: true,
         progress: undefined,
@@ -120,7 +123,7 @@ const InstallPWAButton = () => {
         onClick={handleInstallIOS}
         className=" text-sm bg-indigo-400 text-gray-50 font-bold p-1 rounded"
       >
-         IOS / MAC
+        🍎 IOS / MAC
       </button>
 
       <ToastContainer
