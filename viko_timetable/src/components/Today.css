@@ -100,9 +100,3 @@ select {
   background-color: #aeb3b3;
   opacity: 0.33;
 }
-
-@media screen and (max-width: 768px) {
-  .timetable {
-    width: 100%;
-  }
-}

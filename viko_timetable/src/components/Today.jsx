@@ -4,6 +4,7 @@ import { lightenHexToRgb } from "../utils/lightenColor";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import { useClipboard } from "@custom-react-hooks/use-clipboard";
 import copyIcon from "../../assets/copytoclipboard.png";
+import InstallPWAButton from "./InstallPWAButton";
 const Taday = ({
   groups,
   setSelectCurrentGroup,
@@ -79,10 +80,12 @@ const Taday = ({
 
   return (
     <div className="today-container">
-      <div className="timetable">
-        <div className="camera-nosile"></div>
-
-        <div className="lecture-container">
+      <div>
+        <InstallPWAButton />
+      </div>
+      <div className="timetable w-1/1 sm:w-1/2">
+        {/* <div className="camera-nosile"></div> */}
+        <div className="lecture-container mt-3">
           <div className="flex justify-between items-center">
             <h1 className="title-info text-2xl">
               {checkDate(date)}
