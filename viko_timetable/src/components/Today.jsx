@@ -59,8 +59,21 @@ const Taday = ({
 
     const handleAppInstalled = () => {
       toast.success(
-        "✅ App installed! Open it from your Home Screen or App Launcher."
+        "✅ App installed! Open it from your Home Screen or App Launcher.",
+        {
+          toastId: "app_installed",
+          position: "top-center",
+          autoClose: false,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          transition: Zoom,
+        }
       );
+      window.location.reload();
     };
 
     window.addEventListener("appinstalled", handleAppInstalled);
