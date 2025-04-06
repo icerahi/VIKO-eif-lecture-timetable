@@ -122,7 +122,7 @@ const Taday = ({
       });
     }
   };
-
+  console.log("preview image:", previewImage);
   return (
     <div className="flex sm:flex-row-reverse flex-wrap justify-center items-center">
       <div className="timetable w-1/1 sm:w-1/2">
