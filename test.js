@@ -1,12 +1,25 @@
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
+const axios = require("axios");
 const puppeteer = require("puppeteer");
 
 const app = express();
 app.use(cors());
 app.use(express.json()); // Middleware to parse JSON request bodies
 app.use(express.static(path.join(__dirname, "public")));
+
+const MAIN_DB_URL =
+  "https://vikoeif.edupage.org/rpr/server/maindbi.js?__func=mainDBIAccessor";
+
+const CURRENT_URL =
+  "https://vikoeif.edupage.org/timetable/server/currenttt.js?__func=curentttGetData";
+
+function extractDate(url) {
+  const parseURL = new URL(url);
+  const date = parseURL.searchParams.get("date");
+  return date;
+}
 
 //Helper function to capture the screenshot and save to a file
 async function captureScreenshot(url) {
@@ -19,9 +32,7 @@ async function captureScreenshot(url) {
   try {
     await page.goto(url, { waitUntil: "networkidle2" });
 
-    const parseURL = new URL(url);
-    const date = parseURL.searchParams.get("date");
-
+    const date = extractDate(url);
     // Save screenshot to the 'public/images' folder with a unique name
     const screenshotPath = path.join(__dirname, "public/images", `${date}.png`);
 
@@ -53,12 +64,17 @@ app.get("/preview_image", async (req, res) => {
   try {
     // Capture the screenshot of the page at the URL and save it to the public/images directory
     const imagePath = await captureScreenshot(url);
-
+    const date = extractDate(url);
     // Send the relative path of the saved image to the frontend
-    const image = `${req.protocol}://${req.get("host")}/images/screenshot.png`;
+    const image = `${req.protocol}://${req.get("host")}/images/${date}.png`;
     res.json({ image });
   } catch (err) {
     console.error("Error capturing screenshot:", err);
     res.status(500).send("Error capturing screenshot");
   }
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });

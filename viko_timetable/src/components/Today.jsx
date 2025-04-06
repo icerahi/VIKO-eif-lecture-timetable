@@ -23,7 +23,6 @@ const Taday = ({
 }) => {
   const { copyToClipboard } = useClipboard();
   const [isInstalled, setIsInstalled] = useState(false);
-  const [previewImage, setPreviewImage] = useState(null);
   const { API_URL } = useContext(AppContext);
 
   const CheckLectureStatus = (lecture) => {
@@ -52,15 +51,6 @@ const Taday = ({
   };
 
   useEffect(() => {
-    const fetchImage = async () => {
-      const response = await fetch(
-        `${API_URL}/preview_image?url=${window.location.href}`
-      );
-      const imageUrl = await response.json(); // Get the blob data
-      setPreviewImage(imageUrl.image); // Set the blob URL as the image source
-    };
-    fetchImage();
-
     let isInstalled =
       window.matchMedia("(display-mode:standalone").matches ||
       window.navigator.standalone === true; // check for android or ios
@@ -89,7 +79,7 @@ const Taday = ({
     return () => {
       window.removeEventListener("appinstalled", handleAppInstalled);
     };
-  }, [previewImage]);
+  }, []);
 
   const handleShare = async () => {
     // Check if Web Share API is available (for mobile users)
@@ -122,17 +112,9 @@ const Taday = ({
       });
     }
   };
-  console.log("preview image:", previewImage);
   return (
     <div className="flex sm:flex-row-reverse flex-wrap justify-center items-center">
       <div className="timetable w-1/1 sm:w-1/2">
-        <Helmet>
-          <meta property="og:title" content="VIKO EIF Timetable" />
-          <meta property="og:image" content={previewImage} />
-          <meta property="og:description" content="VIKO EIF Timetable" />
-          <meta property="og:url" content={previewImage} />
-          <meta name="twitter:card" content="VIKO EIF Timetable" />
-        </Helmet>
         {/* <div className="camera-nosile"></div> */}
         <div className="lecture-container mt-3">
           <div className="flex justify-between items-center">

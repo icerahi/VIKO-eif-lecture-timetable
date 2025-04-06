@@ -14,7 +14,6 @@ import {
   limitToLast,
 } from "./firebaseConfig";
 import Today from "./components/Today";
-import Test from "./Test";
 import { useContext } from "react";
 import { AppContext } from "./context/AppContext";
 
@@ -217,7 +216,6 @@ const App = () => {
               />
             }
           />
-          <Route path="/test" element={<Test />} />
         </Routes>
 
         <footer className="text-center text-sm fixed bottom-0 w-1/1 p-1 bg-gray-500 text-white">
@@ -229,7 +227,8 @@ const App = () => {
               href="https://github.com/icerahi"
             >
               Imran
-            </a>
+            </a> |
+            <a href="https://github.com/icerahi/VIKO-eif-lecture-timetable" className="underline" target="_blank"> Source Code</a> | Feel free to contribute!
           </em>
         </footer>
       </main>

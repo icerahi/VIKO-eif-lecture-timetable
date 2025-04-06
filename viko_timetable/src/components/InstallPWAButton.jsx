@@ -49,7 +49,7 @@ const InstallPWAButton = () => {
       toast.info(message, {
         toastId: "android",
         position: "top-center",
-        autoClose: 2000,
+        autoClose: 1000,
         hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: true,
