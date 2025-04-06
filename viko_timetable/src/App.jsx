@@ -16,6 +16,7 @@ import {
 import Today from "./components/Today";
 import { useContext } from "react";
 import { AppContext } from "./context/AppContext";
+import { ToastContainer } from "react-toastify";
 
 // 🔹 Declare debounce function globally (outside the component)
 const debounce = (func, delay) => {
@@ -217,7 +218,14 @@ const App = () => {
             }
           />
         </Routes>
-
+        <ToastContainer
+          toastClassName="text-white rounded-lg shadow-lg "
+          limit={1}
+          bodyClassName="text-sm"
+          hideProgressBar
+          closeOnClick
+          draggable={true}
+        />
         <footer className="text-center text-sm fixed bottom-0 w-1/1 p-1 bg-gray-500 text-white">
           <em className="opacity-50">
             Made with ❤️ by{" "}
@@ -227,8 +235,17 @@ const App = () => {
               href="https://github.com/icerahi"
             >
               Imran
-            </a> |
-            <a href="https://github.com/icerahi/VIKO-eif-lecture-timetable" className="underline" target="_blank"> Source Code</a> | Feel free to contribute!
+            </a>{" "}
+            |
+            <a
+              href="https://github.com/icerahi/VIKO-eif-lecture-timetable"
+              className="underline"
+              target="_blank"
+            >
+              {" "}
+              Source Code
+            </a>{" "}
+            | Feel free to contribute!
           </em>
         </footer>
       </main>

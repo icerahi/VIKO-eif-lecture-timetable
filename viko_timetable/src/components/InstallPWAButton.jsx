@@ -76,10 +76,10 @@ const InstallPWAButton = () => {
 
   const handleInstallIOS = () => {
     toast.info(
-      <div className="flex flex-col gap-2 items-center ">
-        <p className="text-sm text-gray-500">
+      <div className="flex flex-col gap-2 items-center mt-1">
+        <p className="text-[0.8rem] text-gray-500">
           Tap <strong>Share</strong> ⬆️ then{" "}
-          <strong>Add to Home Screen or Add to Dock</strong>{" "}
+          <strong>Add to Home Screen / Add to Dock</strong>{" "}
         </p>
         <img
           src={iphoneGuide}
@@ -93,6 +93,9 @@ const InstallPWAButton = () => {
         >
           Ok
         </button>
+        <span className="text-gray-400 text-[0.8rem] inline">
+          Touch/Swipe to close!
+        </span>
       </div>,
       {
         toastId: "ios",
@@ -110,7 +113,7 @@ const InstallPWAButton = () => {
   };
 
   return (
-    <div className="flex lg:flex-col gap-1 justify-center mt-2 items-center lg:scale-150 w-100">
+    <div className="flex lg:flex-col gap-1 justify-center items-center lg:scale-150 w-100">
       {/* show install button for android and desktop */}
       <h1 className=" text-sm italic px-2 bg-amber-700 text-gray-50">
         Install {"in/>"}{" "}
@@ -128,15 +131,6 @@ const InstallPWAButton = () => {
       >
         🍎 IOS / MAC
       </button>
-
-      <ToastContainer
-        toastClassName="text-white rounded-lg shadow-lg "
-        limit={1}
-        bodyClassName="text-sm"
-        hideProgressBar
-        closeOnClick
-        draggable={false}
-      />
     </div>
   );
 };
