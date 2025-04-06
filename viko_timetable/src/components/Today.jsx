@@ -8,6 +8,7 @@ import InstallPWAButton from "./InstallPWAButton";
 import { useEffect, useState } from "react";
 import { useContext } from "react";
 import { AppContext } from "../context/AppContext";
+import { Helmet } from "react-helmet";
 
 const Taday = ({
   groups,
@@ -22,6 +23,8 @@ const Taday = ({
 }) => {
   const { copyToClipboard } = useClipboard();
   const [isInstalled, setIsInstalled] = useState(false);
+  const [previewImage, setPreviewImage] = useState(null);
+  const { API_URL } = useContext(AppContext);
 
   const CheckLectureStatus = (lecture) => {
     if (changedLectures.some((item) => item.paskaita === lecture.periodno)) {
@@ -58,14 +61,24 @@ const Taday = ({
       toast.success(
         "✅ App installed! Open it from your Home Screen or App Launcher."
       );
-      window.addEventListener("appinstalled", handleAppInstalled);
-      return () => {
-        window.removeEventListener("appinstalled", handleAppInstalled);
-      };
+    };
+
+    window.addEventListener("appinstalled", handleAppInstalled);
+    return () => {
+      window.removeEventListener("appinstalled", handleAppInstalled);
     };
   }, []);
 
   const handleShare = async () => {
+    const fetchImage = async () => {
+      const response = await fetch(
+        `${API_URL}/preview_image?url=${window.location.href}`
+      );
+      const imageUrl = await response.json(); // Get the blob data
+      setPreviewImage(imageUrl.image); // Set the blob URL as the image source
+    };
+    fetchImage();
+
     // Check if Web Share API is available (for mobile users)
     if (navigator.share) {
       try {
@@ -100,6 +113,9 @@ const Taday = ({
   return (
     <div className="flex sm:flex-row-reverse flex-wrap justify-center items-center">
       <div className="timetable w-1/1 sm:w-1/2">
+        <Helmet>
+          <meta property="og:image" content={previewImage} />
+        </Helmet>
         {/* <div className="camera-nosile"></div> */}
         <div className="lecture-container mt-3">
           <div className="flex justify-between items-center">
@@ -117,7 +133,7 @@ const Taday = ({
             </button>
           </div>
 
-          <div className="lectures">
+          <div id="lectures" className="lectures">
             {lectures.length == 0 && (
               <p>No lectures information available for the selected day!</p>
             )}

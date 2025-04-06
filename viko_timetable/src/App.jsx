@@ -14,6 +14,9 @@ import {
   limitToLast,
 } from "./firebaseConfig";
 import Today from "./components/Today";
+import Test from "./Test";
+import { useContext } from "react";
+import { AppContext } from "./context/AppContext";
 
 // 🔹 Declare debounce function globally (outside the component)
 const debounce = (func, delay) => {
@@ -43,7 +46,8 @@ const App = () => {
 
   // const API_URL = "http://localhost:3000";
   // const API_URL = "https://viko-eif-lecture-timetable.onrender.com";
-  const API_URL = "https://overseas-vyky-icerahi-d9f7baf3.koyeb.app";
+  const { API_URL } = useContext(AppContext);
+  // const API_URL = "https://overseas-vyky-icerahi-d9f7baf3.koyeb.app";
   const all_info = useFetch(
     `${API_URL}/all`,
     getPayload(startDate, endDate, true),
@@ -213,6 +217,7 @@ const App = () => {
               />
             }
           />
+          <Route path="/test" element={<Test />} />
         </Routes>
 
         <footer className="text-center text-sm fixed bottom-0 w-1/1 p-1 bg-gray-500 text-white">
