@@ -14,5 +14,8 @@
     "express": "^4.21.2",
     "path": "^0.12.7",
     "puppeteer": "^24.6.0"
+  },
+  "devDependencies": {
+    "@flydotio/dockerfile": "^0.7.10"
   }
 }
