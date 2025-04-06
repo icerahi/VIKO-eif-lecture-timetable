@@ -127,10 +127,9 @@ const Taday = ({
     <div className="flex sm:flex-row-reverse flex-wrap justify-center items-center">
       <div className="timetable w-1/1 sm:w-1/2">
         <Helmet>
-          <title>{title}</title>
           <meta property="og:title" content="VIKO EIF Timetable" />
           <meta property="og:image" content={previewImage} />
-          <meta property="og:description" content={description} />
+          <meta property="og:description" content="VIKO EIF Timetable" />
           <meta property="og:url" content={previewImage} />
           <meta name="twitter:card" content="VIKO EIF Timetable" />
         </Helmet>
