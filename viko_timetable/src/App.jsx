@@ -154,6 +154,14 @@ const App = () => {
     };
     fetchFirebaseData();
 
+    const generatePreview = async () => {
+      const res = await fetch(
+        `https://vikoeif.imranhasan.dev/generate_og_image/?url=${window.location.href}`
+      );
+      const message = await res.json();
+      console.log(message);
+    };
+    generatePreview();
     //clean debounce function optional
     // return ()=>clearTimeout(debouncedLectureInfo)
   }, [all_info, current, subjects, teachers, selectCurrentGroup]);

@@ -88,7 +88,7 @@ const Taday = ({
         await navigator.share({
           title: "VIKO EIF Timetable App",
           text: `Lecture schedule for ${date.format("ddd MMM DD YYYY")}`,
-          url: window.location.href,
+          url: `https://vikoeif.imranhasan.dev/preview/${date}`,
         });
         console.log("Shared successfully!");
       } catch (error) {
@@ -98,18 +98,21 @@ const Taday = ({
       // Fallback for desktop or unsupported mobile browsers: Copy the link to clipboard
 
       copyToClipboard(window.location.href);
-      toast.success(`Copied to your clip board! \n${window.location.href}`, {
-        style: { whiteSpace: "pre-line" },
-        position: "top-left",
-        autoClose: 2000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        transition: Zoom,
-      });
+      toast.success(
+        `Copied to your clip board! \nhttps://vikoeif.imranhasan.dev/preview/${date}`,
+        {
+          style: { whiteSpace: "pre-line" },
+          position: "top-left",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          transition: Zoom,
+        }
+      );
     }
   };
   return (
