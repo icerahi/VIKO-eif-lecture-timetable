@@ -159,12 +159,12 @@ const App = () => {
         `https://vikoeif.imranhasan.dev/generate_og_image/?url=${window.location.href}`
       );
       const message = await res.json();
-      console.log(message);
+      console.log("og image response", message);
     };
     generatePreview();
     //clean debounce function optional
     // return ()=>clearTimeout(debouncedLectureInfo)
-  }, [all_info, current, subjects, teachers, selectCurrentGroup]);
+  }, [all_info, current, subjects, teachers, selectCurrentGroup, date]);
 
   useEffect(() => {
     const targetDate = moment(date, "YYYY-MM-DD").format("ddd MMM DD YYYY");
