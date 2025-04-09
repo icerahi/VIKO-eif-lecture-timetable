@@ -87,7 +87,6 @@ const Taday = ({
       try {
         await navigator.share({
           title: "VIKO EIF Timetable App",
-          text: `Lecture schedule for ${date.format("ddd MMM DD YYYY")}`,
           url: `https://vikoeif.imranhasan.dev/preview/${date.format(
             "YYYY-MM-DD"
           )}`,
