@@ -117,7 +117,10 @@ const Taday = ({
     }
   };
   return (
-    <div className="flex sm:flex-row-reverse flex-wrap justify-center items-center">
+    <div
+      id="screenshot"
+      className="flex sm:flex-row-reverse flex-wrap justify-center items-center border-2 border-amber-400"
+    >
       <div className="timetable w-1/1 sm:w-1/2">
         {/* <div className="camera-nosile"></div> */}
         <div className="lecture-container mt-3">
