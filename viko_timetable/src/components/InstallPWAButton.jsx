@@ -26,7 +26,6 @@ const InstallPWAButton = () => {
     const handleBeforeInstallPrompt = (event) => {
       event.preventDefault();
       setDeferredPrompt(event);
-      setShowInstallButton(true);
     };
     window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
 
@@ -70,8 +69,7 @@ const InstallPWAButton = () => {
       console.log("user dismissed the install");
     }
 
-    setDeferredPrompt(null);
-    setShowInstallButton(false);
+    // setDeferredPrompt(null);
   };
 
   const handleInstallIOS = () => {
