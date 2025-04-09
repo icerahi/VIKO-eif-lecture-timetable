@@ -100,7 +100,9 @@ const Taday = ({
 
       copyToClipboard(window.location.href);
       toast.success(
-        `Copied to your clip board! \nhttps://vikoeif.imranhasan.dev/preview/${date}`,
+        `Copied to your clip board! \nhttps://vikoeif.imranhasan.dev/preview/${date.format(
+          "YYYY-MM-DD"
+        )}`,
         {
           style: { whiteSpace: "pre-line" },
           position: "top-left",
@@ -119,7 +121,7 @@ const Taday = ({
   return (
     <div
       id="screenshot"
-      className="flex sm:flex-row-reverse flex-wrap justify-center items-center border-2 border-amber-400"
+      className="flex sm:flex-row-reverse flex-wrap justify-center items-center"
     >
       <div className="timetable w-1/1 sm:w-1/2">
         {/* <div className="camera-nosile"></div> */}

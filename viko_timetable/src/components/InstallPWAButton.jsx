@@ -42,10 +42,11 @@ const InstallPWAButton = () => {
     const message = isAppleDevice
       ? "Come on dude! This option is for Android/Linux/Windows Users 😉"
       : "App already installed in your device. Please check your Applist!";
+    let isInstalled =
+      window.matchMedia("(display-mode:standalone").matches ||
+      window.navigator.standalone === true;
 
-    if (!deferredPrompt) {
-      console.log(isAppleDevice);
-
+    if (!isInstalled) {
       toast.info(message, {
         toastId: "android",
         position: "top-center",
