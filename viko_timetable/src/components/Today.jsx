@@ -8,7 +8,6 @@ import InstallPWAButton from "./InstallPWAButton";
 import { useEffect, useState } from "react";
 import { useContext } from "react";
 import { AppContext } from "../context/AppContext";
-import { Helmet } from "react-helmet";
 
 const Taday = ({
   groups,
@@ -23,7 +22,6 @@ const Taday = ({
 }) => {
   const { copyToClipboard } = useClipboard();
   const [isInstalled, setIsInstalled] = useState(false);
-  const { API_URL } = useContext(AppContext);
 
   const CheckLectureStatus = (lecture) => {
     if (changedLectures.some((item) => item.paskaita === lecture.periodno)) {
@@ -82,15 +80,25 @@ const Taday = ({
   }, []);
 
   const handleShare = async () => {
+    try {
+      const response = await fetch(
+        `https://vikoeif.imranhasan.dev/generate_og_image/?url=${window.location.href}`
+      );
+      const message = await response.json();
+      console.log("Message from OG image:");
+    } catch (err) {
+      console.log("Error generating og image:", err);
+    }
+
     // Check if Web Share API is available (for mobile users)
     if (navigator.share) {
       try {
         await navigator.share({
           title: "VIKO EIF Timetable App",
-          // url: `https://vikoeif.imranhasan.dev/preview/${date.format(
-          //   "YYYY-MM-DD"
-          // )}`,
-          url: window.location.href,
+          url: `https://vikoeif.imranhasan.dev/preview/${date.format(
+            "YYYY-MM-DD"
+          )}`,
+          // url: window.location.href,
         });
         console.log("Shared successfully!");
       } catch (error) {
@@ -101,9 +109,9 @@ const Taday = ({
 
       copyToClipboard(window.location.href);
       toast.success(
-        // `Copied to your clip board! \nhttps://vikoeif.imranhasan.dev/preview/${date.format(
-        //   "YYYY-MM-DD"
-        `Copied to your clip board! \n${window.location.href}
+        `Copied to your clip board! \nhttps://vikoeif.imranhasan.dev/preview/${date.format(
+          "YYYY-MM-DD"
+          // `Copied to your clip board! \n${window.location.href}
         )}`,
         {
           style: { whiteSpace: "pre-line" },
