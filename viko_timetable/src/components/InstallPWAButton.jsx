@@ -17,8 +17,6 @@ const InstallPWAButton = () => {
       userAgent.includes("ipod") ||
       console.log(userAgent);
 
-    console.log(isIOS);
-
     setIsAppleDevice(isIOS);
 
     //handle beforeinstallpropt event for Android & Desktop
@@ -37,39 +35,81 @@ const InstallPWAButton = () => {
     };
   }, []);
 
+  const isInAppBrowser = () => {
+    const ua = navigator.userAgent || navigator.vendor || window.opera;
+    return /FBAN|FBAV|Instagram|Messenger/i.test(ua);
+  };
+
   const handleInstall = async () => {
-    const message = isAppleDevice
-      ? "Come on dude! This option is for Android/Linux/Windows Users 😉"
-      : "App already installed in your device. Please check your Applist!";
-
-    if (!deferredPrompt) {
-      console.log(isAppleDevice);
-
-      toast.info(message, {
-        toastId: "android",
-        position: "top-center",
-        autoClose: 1000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        transition: Zoom,
-      });
+    // In-app browser detected
+    if (isInAppBrowser()) {
+      toast.info(
+        "Please open this page in Chrome or your default browser to install the app.",
+        {
+          toastId: "inapp-browser",
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          transition: Zoom,
+        }
+      );
       return;
     }
-    deferredPrompt.prompt(); // show the install prompt
 
-    const { outcome } = await deferredPrompt.userChoice;
-    console.log(outcome);
-    if (outcome === "accepted") {
-      console.log("User accepted the install");
-    } else {
-      console.log("user dismissed the install");
+    // Apple devices
+    if (isAppleDevice) {
+      toast.info(
+        "Come on dude! This option is for Android/Linux/Windows Users 😉",
+        {
+          toastId: "ios-block",
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          transition: Zoom,
+        }
+      );
+      return;
     }
 
-    // setDeferredPrompt(null);
+    // No install prompt available
+    if (!deferredPrompt) {
+      toast.info(
+        "App is already installed or install option is not available right now.",
+        {
+          toastId: "no-prompt",
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          transition: Zoom,
+        }
+      );
+      return;
+    }
+
+    try {
+      deferredPrompt.prompt(); // Show install prompt
+      const { outcome } = await deferredPrompt.userChoice;
+
+      if (outcome === "accepted") {
+        console.log("User accepted the install");
+      } else {
+        console.log("User dismissed the install");
+      }
+    } catch (error) {
+      console.error("Install prompt failed:", error);
+      toast.error("Something went wrong during install.");
+    } finally {
+      setDeferredPrompt(null);
+    }
   };
 
   const handleInstallIOS = () => {
