@@ -111,7 +111,6 @@ const Taday = ({
       toast.success(
         `Copied to your clip board! \nhttps://vikoeif.imranhasan.dev/preview/${date.format(
           "YYYY-MM-DD"
-          // `Copied to your clip board! \n${window.location.href}
         )}`,
         {
           style: { whiteSpace: "pre-line" },
