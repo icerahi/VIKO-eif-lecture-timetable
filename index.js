@@ -58,7 +58,7 @@ app.post("/current", async (req, res) => {
 let defaultImage = false;
 function getOGImageURL(req, date) {
   if (defaultImage) {
-    return `${req.protocol}://${req.get("host")}/images/default.png`;
+    return `${req.protocol}://${req.get("host")}/default/default.png`;
   }
   return `${req.protocol}://${req.get("host")}/images/${date}.png`;
 }
