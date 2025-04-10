@@ -44,7 +44,7 @@ const InstallPWAButton = () => {
     // In-app browser detected
     if (isInAppBrowser()) {
       toast.info(
-        "Please open this page in Chrome or your default browser to install the app.",
+        "Please open in Chrome or your default browser to install the app.",
         {
           toastId: "inapp-browser",
           position: "top-center",
