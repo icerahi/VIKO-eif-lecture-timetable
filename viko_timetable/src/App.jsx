@@ -17,6 +17,7 @@ import Today from "./components/Today";
 import { useContext } from "react";
 import { AppContext } from "./context/AppContext";
 import { ToastContainer } from "react-toastify";
+import * as htmlToImage from "html-to-image";
 
 // 🔹 Declare debounce function globally (outside the component)
 const debounce = (func, delay) => {
@@ -154,16 +155,40 @@ const App = () => {
     };
     fetchFirebaseData();
 
-    const generatePreview = async () => {
-      const res = await fetch(
-        `https://vikoeif.imranhasan.dev/generate_og_image/?url=${window.location.href}`
-      );
-      const message = await res.json();
-      console.log("og image response", message);
+    //capture screenshot and send to backend
+
+    const captureScreenshotAndSend = async () => {
+      const node = document.getElementById("screenshot");
+
+      try {
+        // generate image as blob
+        const blob = await htmlToImage.toBlob(node, {
+          bgcolor: "white",
+          width: 1200,
+          height: 630,
+          pixelRatio: 1, //can be adjustable
+        });
+
+        //create formData and append image
+        const formData = new FormData();
+        formData.append("image", blob, `${date}.png`);
+
+        // Send the captured image to the backend
+        // Send the FormData with the image to the backend
+        const response = await fetch("http://localhost:3000/upload-og-image", {
+          method: "POST",
+          body: formData,
+        });
+
+        const data = await response.json();
+        console.log("Image uploaded successfully:", data);
+      } catch (error) {
+        console.error("Error uploading image:", error);
+        throw error;
+      }
     };
-    generatePreview();
-    //clean debounce function optional
-    // return ()=>clearTimeout(debouncedLectureInfo)
+
+    captureScreenshotAndSend();
   }, [all_info, current, subjects, teachers, selectCurrentGroup, date]);
 
   useEffect(() => {

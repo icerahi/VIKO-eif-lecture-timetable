@@ -87,9 +87,10 @@ const Taday = ({
       try {
         await navigator.share({
           title: "VIKO EIF Timetable App",
-          url: `https://vikoeif.imranhasan.dev/preview/${date.format(
-            "YYYY-MM-DD"
-          )}`,
+          // url: `https://vikoeif.imranhasan.dev/preview/${date.format(
+          //   "YYYY-MM-DD"
+          // )}`,
+          url: window.location.href,
         });
         console.log("Shared successfully!");
       } catch (error) {
@@ -100,8 +101,9 @@ const Taday = ({
 
       copyToClipboard(window.location.href);
       toast.success(
-        `Copied to your clip board! \nhttps://vikoeif.imranhasan.dev/preview/${date.format(
-          "YYYY-MM-DD"
+        // `Copied to your clip board! \nhttps://vikoeif.imranhasan.dev/preview/${date.format(
+        //   "YYYY-MM-DD"
+        `Copied to your clip board! \n${window.location.href}
         )}`,
         {
           style: { whiteSpace: "pre-line" },
