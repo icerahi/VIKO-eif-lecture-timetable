@@ -71,6 +71,7 @@ const InstallPWAButton = () => {
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
+          theme: "dark",
           transition: Zoom,
         }
       );
@@ -89,6 +90,7 @@ const InstallPWAButton = () => {
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
+          theme: "dark",
           transition: Zoom,
         }
       );
