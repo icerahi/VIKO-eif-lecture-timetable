@@ -5,6 +5,7 @@ const express = require("express");
 const cors = require("cors");
 const axios = require("axios");
 const path = require("path");
+const moment = require("moment");
 const app = express();
 app.use(cors());
 app.use(express.json()); // Middleware to parse JSON request bodies
@@ -54,7 +55,11 @@ app.post("/current", async (req, res) => {
   }
 });
 
+let defaultImage = false;
 function getOGImageURL(req, date) {
+  if (defaultImage) {
+    return `${req.protocol}://${req.get("host")}/images/default.png`;
+  }
   return `${req.protocol}://${req.get("host")}/images/${date}.png`;
 }
 
@@ -119,13 +124,17 @@ app.get("/generate_og_image", async (req, res) => {
     // Check if image already exists
     await fs.access(imagePath);
     console.log("Serving from Existing");
+    defaultImage = false;
     return res.json({ image: getOGImageURL(req, date) });
   } catch (err) {
     // File doesn't exist, proceed to generate it
     try {
       await takeScreenshot(url);
+      defaultImage = false;
       return res.json({ image: getOGImageURL(req, date) });
     } catch (screenshotErr) {
+      defaultImage = true;
+      return res.json({ image: getOGImageURL(req, date) });
       console.error("Error capturing screenshot:", screenshotErr);
       return res.status(500).send("Error capturing screenshot");
     }
