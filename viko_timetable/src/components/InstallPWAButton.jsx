@@ -53,6 +53,7 @@ const InstallPWAButton = () => {
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
+          theme: "dark",
           transition: Zoom,
         }
       );
@@ -80,20 +81,17 @@ const InstallPWAButton = () => {
 
     // No install prompt available
     if (!deferredPrompt) {
-      toast.info(
-        "App is already installed or install option is not available right now.",
-        {
-          toastId: "no-prompt",
-          position: "top-center",
-          autoClose: 2000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          theme: "dark",
-          transition: Zoom,
-        }
-      );
+      toast.info("App is already installed, please checkout Applist!", {
+        toastId: "no-prompt",
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "dark",
+        transition: Zoom,
+      });
       return;
     }
 
