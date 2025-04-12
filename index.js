@@ -185,7 +185,7 @@ app.post("/webhook", (req, res) => {
       const messaging = entry.messaging;
       // const sender = event.sender.id;
       messaging.forEach((messageEvent) => {
-        if (messageEvent.meesage && messageEvent.message.text) {
+        if (messageEvent.message && messageEvent.message.text) {
           const userMessage = messageEvent.message.text.toLowerCase();
           const userId = messageEvent.sender.id;
           console.log(userMessage);
