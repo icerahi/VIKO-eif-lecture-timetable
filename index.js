@@ -213,6 +213,72 @@ function sendMessage(sender, text) {
     .catch((err) => console.log("Error sending message:", err.response.data));
 }
 
+//privacy policy for messager bot review
+app.get("/privacy-policy", (req, res) => {
+  const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy for PI24E Bot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #333;
+        }
+        p {
+            font-size: 14px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <h1>Privacy Policy for PI24E Bot</h1>
+    <p><strong>Effective Date:</strong> 12-04-2025</p>
+    
+    <h2>1. Introduction</h2>
+    <p>Welcome to PI24E Bot (referred to as "we", "our", or "us"). This Privacy Policy explains how we handle information when you use our Facebook Messenger bot. We do not collect or store any personal data from users.</p>
+    
+    <h2>2. Information We Collect</h2>
+    <p>We do not collect or store any personal data from users. Our bot only responds to queries related to the class schedule and does not retain any information once the conversation ends.</p>
+
+    <h2>3. How We Use Your Information</h2>
+    <p>Our bot responds to your queries about the class schedule. We do not use or share any personal data as no data is stored or collected. We use the messages you send to provide relevant responses about the class schedule for the day.</p>
+
+    <h2>4. Data Retention</h2>
+    <p>Since we do not store any data, there is no data retention period. Once a conversation ends, no information is retained.</p>
+
+    <h2>5. Data Security</h2>
+    <p>As we do not collect or store personal data, there are no security concerns related to user data.</p>
+
+    <h2>6. Your Rights</h2>
+    <p>As we do not store any personal data, there are no data access or deletion rights to request.</p>
+
+    <h2>7. Purpose of the Bot</h2>
+    <p>The purpose of this Facebook Messenger bot is to provide quick responses to class schedule queries. It does not initiate conversations or store any user data. Users can interact with the bot by typing specific commands (e.g., "#class schedule"), and the bot will reply with the relevant class schedule for the day.</p>
+
+    <h2>8. No Use of Personal Data</h2>
+    <p>Our bot does not collect, store, or share any personal information from users. It only processes the user’s message in real-time and provides a response based on predefined queries. No data is retained after the interaction ends.</p>
+
+    <h2>9. Changes to This Privacy Policy</h2>
+    <p>We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated "Effective Date".</p>
+
+    <h2>10. Contact Information</h2>
+    <p>If you have any questions about this Privacy Policy, please contact us at: imranmdhasan07@gmail.com</p>
+</body>
+</html>
+`;
+  res.send(html);
+});
+
+app.get("/", (req, res) => {
+  res.send("Welcome to VIKO EIF Lecture schedule app");
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
