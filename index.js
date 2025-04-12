@@ -183,15 +183,14 @@ app.post("/webhook", (req, res) => {
   if (body.object === "page") {
     body.entry.forEach((entry) => {
       const messaging = entry.messaging;
-      console.log(messaging);
       // const sender = event.sender.id;
       messaging.forEach((messageEvent) => {
         if (messageEvent.meesage && messageEvent.message.text) {
           const userMessage = messageEvent.message.text.toLowerCase();
           const userId = messageEvent.sender.id;
-
+          console.log(userMessage);
           //handle commands
-          if ((userMessage, includes("#hello"))) {
+          if (userMessage.includes("#hello")) {
             sendResponse(userId, "Hello!");
           }
           if (userMessage.includes("#lecture today")) {
