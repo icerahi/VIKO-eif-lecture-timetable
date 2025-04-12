@@ -183,7 +183,7 @@ app.post("/webhook", (req, res) => {
   if (body.object === "page") {
     body.entry.forEach((entry) => {
       const messaging = entry.messaging;
-
+      console.log(messaging);
       // const sender = event.sender.id;
       messaging.forEach((messageEvent) => {
         if (messageEvent.meesage && messageEvent.message.text) {
