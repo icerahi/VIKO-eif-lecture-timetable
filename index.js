@@ -182,26 +182,49 @@ app.post("/webhook", (req, res) => {
 
   if (body.object === "page") {
     body.entry.forEach((entry) => {
-      const event = entry.messaging[0];
-      const sender = event.sender.id;
+      const messaging = entry.messaging;
 
-      if (event.message && event.message.text) {
-        const text = event.message.text.toLowerCase().trim();
+      // const sender = event.sender.id;
+      messaging.forEach((messageEvent) => {
+        if (messageEvent.meesage && messageEvent.message.text) {
+          const userMessage = messageEvent.message.text.toLowerCase();
+          const userId = messageEvent.sender.id;
 
-        if (text === "#lecture today") {
-          let response = " Today's Lectures:\n";
-          response += "lectue 1,lecture2";
-          sendMessage(sender, response);
-        } else {
-          sendMessage(sender, "Type '#lecture today' to see today's schedule");
+          //handle commands
+          if ((userMessage, includes("#hello"))) {
+            sendResponse(userId, "Hello!");
+          }
+          if (userMessage.includes("#lecture today")) {
+            const schedule =
+              "Today's class schedule:\n- 10:00 AM: Math\n- 12:00 PM: Physics\n- 2:00 PM: Computer Science\n- 4:00 PM: English";
+            sendResponse(userId, schedule);
+          }
+
+          if (userMessage.includes("#lecture tomorrow")) {
+            const schedule =
+              "Tomorrow's class schedule:\n- 10:00 AM: Programming\n- 12:00 PM: Data Structure and Algorithom\n- 2:00 PM: Computer Graphics\n- 4:00 PM: Environmental studies";
+            sendResponse(userId, schedule);
+          }
+
+          if (userMessage.includes("#privacy")) {
+            const privacyMessage =
+              "We respect your privacy. We do not store any data. You can read our full privacy policy at: https://vikoeif.imranhasan.dev/privacy-policy";
+            sendResponse(userId, privacyMessage);
+          }
+
+          if (userMessage.includes("#help")) {
+            const helpMessage =
+              "Here are the commands you can use:\n- #lecture today: Get today's class schedule\n- #lecture tomorrow: Get tomorrows's class schedule\n- #privacy: Get the privacy policy\n- #help: Get this list of commands";
+            sendResponse(userId, helpMessage);
+          }
         }
-      }
+      });
     });
     res.sendStatus(200);
   }
 });
 
-function sendMessage(sender, text) {
+function sendResponse(sender, text) {
   axios
     .post(
       `https://graph.facebook.com/v12.0/me/messages?access_token=${PAGE_ACCESS_TOKEN}`,
