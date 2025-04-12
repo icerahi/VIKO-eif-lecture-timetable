@@ -241,57 +241,33 @@ app.get("/privacy-policy", (req, res) => {
   const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Policy for PI24E Bot</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            line-height: 1.6;
-        }
-        h1 {
-            color: #333;
-        }
-        p {
-            font-size: 14px;
-            color: #555;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy and Terms of Service</title>
 </head>
 <body>
-    <h1>Privacy Policy for PI24E Bot</h1>
-    <p><strong>Effective Date:</strong> 12-04-2025</p>
-    
-    <h2>1. Introduction</h2>
-    <p>Welcome to PI24E Bot (referred to as "we", "our", or "us"). This Privacy Policy explains how we handle information when you use our Facebook Messenger bot. We do not collect or store any personal data from users.</p>
-    
-    <h2>2. Information We Collect</h2>
-    <p>We do not collect or store any personal data from users. Our bot only responds to queries related to the class schedule and does not retain any information once the conversation ends.</p>
-
-    <h2>3. How We Use Your Information</h2>
-    <p>Our bot responds to your queries about the class schedule. We do not use or share any personal data as no data is stored or collected. We use the messages you send to provide relevant responses about the class schedule for the day.</p>
-
-    <h2>4. Data Retention</h2>
-    <p>Since we do not store any data, there is no data retention period. Once a conversation ends, no information is retained.</p>
-
-    <h2>5. Data Security</h2>
-    <p>As we do not collect or store personal data, there are no security concerns related to user data.</p>
-
-    <h2>6. Your Rights</h2>
-    <p>As we do not store any personal data, there are no data access or deletion rights to request.</p>
-
-    <h2>7. Purpose of the Bot</h2>
-    <p>The purpose of this Facebook Messenger bot is to provide quick responses to class schedule queries. It does not initiate conversations or store any user data. Users can interact with the bot by typing specific commands (e.g., "#class schedule"), and the bot will reply with the relevant class schedule for the day.</p>
-
-    <h2>8. No Use of Personal Data</h2>
-    <p>Our bot does not collect, store, or share any personal information from users. It only processes the user’s message in real-time and provides a response based on predefined queries. No data is retained after the interaction ends.</p>
-
-    <h2>9. Changes to This Privacy Policy</h2>
-    <p>We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated "Effective Date".</p>
-
-    <h2>10. Contact Information</h2>
-    <p>If you have any questions about this Privacy Policy, please contact us at: imranmdhasan07@gmail.com</p>
+  <h1>Privacy Policy and Terms of Service</h1>
+  
+  <h2>Privacy Policy</h2>
+  <p>We value your privacy. Our bot interacts with users in the class group to provide class schedules and related information. We do not store any user data.</p>
+  
+  <h2>Data Collection</h2>
+  <p>Our bot does not collect or store personal data from users. Any interactions are ephemeral and only serve to respond to user queries about the class schedule.</p>
+  
+  <h2>Data Deletion</h2>
+  <p>Since we do not store any user data, there is no data to delete.</p>
+  
+  <h2>Terms of Service</h2>
+  <p>By using the PI24E class bot, you agree to the following terms:</p>
+  <ul>
+    <li>The bot will respond to class schedule inquiries based on triggers like '#lecture today'.</li>
+    <li>The bot does not store or collect any personal data. It only provides responses to trigger-based queries.</li>
+    <li>You agree not to misuse or abuse the bot's functionality in the group.</li>
+    <li>If you have any questions regarding this policy or the bot's behavior, please reach out to the group admin.</li>
+  </ul>
+  
+  <h2>Contact Us</h2>
+  <p>If you have any questions regarding this privacy policy or terms of service, please contact us at: <a href="mailto:imranmdhasan07@gmail.com">imranmdhasan07@gmail.com</a></p>
 </body>
 </html>
 `;
