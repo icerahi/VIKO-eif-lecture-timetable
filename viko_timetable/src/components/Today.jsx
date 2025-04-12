@@ -6,8 +6,6 @@ import { useClipboard } from "@custom-react-hooks/use-clipboard";
 import copyIcon from "../../assets/copytoclipboard.png";
 import InstallPWAButton from "./InstallPWAButton";
 import { useEffect, useState } from "react";
-import { useContext } from "react";
-import { AppContext } from "../context/AppContext";
 
 const Taday = ({
   groups,

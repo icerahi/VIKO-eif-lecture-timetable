@@ -6,14 +6,15 @@ const cors = require("cors");
 const axios = require("axios");
 const path = require("path");
 const moment = require("moment");
+const bodyParser = require("body-parser");
+
 const app = express();
 app.use(cors());
 app.use(express.json()); // Middleware to parse JSON request bodies
+app.use(bodyParser.json());
 
 //middleware to serve static files from public folder
 app.use(express.static(path.join(__dirname, "public")));
-
-const ACCESS_KEY = process.env.ACCESS_KEY;
 
 const MAIN_DB_URL =
   "https://vikoeif.edupage.org/rpr/server/maindbi.js?__func=mainDBIAccessor";
@@ -100,7 +101,7 @@ function extractDate(url) {
 
 const takeScreenshot = async (url) => {
   const response = await fetch(
-    `https://api.screenshotone.com/take?access_key=${process.env.ACCESS_KEY}&url=${url}&viewport_width=1200&viewport_height=630&delay=0&timeout=60&image_quality=80`
+    `https://api.screenshotone.com/take?access_key=${process.env.SCREENSHOT_ACCESS_KEY}&url=${url}&viewport_width=1200&viewport_height=630&delay=0&timeout=60&image_quality=80`
   );
   const imageBuffer = await response.arrayBuffer();
 
@@ -156,6 +157,61 @@ app.get("/ice/delete-all", async (req, res) => {
     return res.status(500).send({ error: "Unable to read or delete files." });
   }
 });
+
+//webhook for messenger group bot
+const PAGE_VERIFY_TOKEN = process.env.PAGE_VERIFY_TOKEN; //any string
+const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
+
+//web hook verification
+app.get("/webhook", (req, res) => {
+  const mode = req.query["hub.mode"];
+  const token = req.query["hub.verify_token"];
+  const challenge = req.query["hub.challenge"];
+
+  if (mode === "subscribe" && token === PAGE_VERIFY_TOKEN) {
+    console.log("Webhook verified");
+    res.status(200).send(challenge);
+  } else {
+    res.sendStatus(403);
+  }
+});
+
+//receiving messages
+app.post("/webhook", (req, res) => {
+  const body = req.body;
+
+  if (body.object === "page") {
+    body.entry.forEach((entry) => {
+      const event = entry.messaging[0];
+      const sender = event.sender.id;
+
+      if (event.message && event.message.text) {
+        const text = event.message.text.toLowerCase().trim();
+
+        if (text === "#lecture today") {
+          let response = " Today's Lectures:\n";
+          response += "lectue 1,lecture2";
+          sendMessage(sender, response);
+        } else {
+          sendMessage(sender, "Type '#lecture today' to see today's schedule");
+        }
+      }
+    });
+    res.sendStatus(200);
+  }
+});
+
+function sendMessage(sender, text) {
+  axios
+    .post(
+      `https://graph.facebook.com/v12.0/me/messages?access_token=${PAGE_ACCESS_TOKEN}`,
+      {
+        recipient: { id: sender },
+        message: { text },
+      }
+    )
+    .catch((err) => console.log("Error sending message:", err.response.data));
+}
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
