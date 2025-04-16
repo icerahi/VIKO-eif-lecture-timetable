@@ -6,6 +6,8 @@ import { useClipboard } from "@custom-react-hooks/use-clipboard";
 import copyIcon from "../../assets/copytoclipboard.png";
 import InstallPWAButton from "./InstallPWAButton";
 import { useEffect, useState } from "react";
+import { useContext } from "react";
+import { AppContext } from "../context/AppContext";
 
 const Taday = ({
   groups,
@@ -20,6 +22,7 @@ const Taday = ({
 }) => {
   const { copyToClipboard } = useClipboard();
   const [isInstalled, setIsInstalled] = useState(false);
+  const { API_URL } = useContext(AppContext);
 
   const CheckLectureStatus = (lecture) => {
     if (changedLectures.some((item) => item.paskaita === lecture.periodno)) {
@@ -52,6 +55,14 @@ const Taday = ({
       window.navigator.standalone === true; // check for android or ios
     setIsInstalled(isInstalled);
 
+    const pwaCheck = localStorage.getItem("installed");
+    if (isInstalled && !pwaCheck) {
+      fetch(`${API_URL}/pwa-check`, { method: "POST" });
+
+      //prevent duplicate
+      localStorage.setItem("installed", true);
+    }
+
     const handleAppInstalled = () => {
       toast.success(
         "✅ App installed! Open it from your Home Screen or App Launcher.",
@@ -80,7 +91,7 @@ const Taday = ({
   const handleShare = async () => {
     try {
       const response = await fetch(
-        `https://vikoeif.imranhasan.dev/generate_og_image/?url=${window.location.href}`
+        `${API_URL}/generate_og_image/?url=${window.location.href}`
       );
       const message = await response.json();
       console.log("Message from OG image:");
@@ -93,9 +104,7 @@ const Taday = ({
       try {
         await navigator.share({
           title: "VIKO EIF Timetable App",
-          url: `https://vikoeif.imranhasan.dev/preview/${date.format(
-            "YYYY-MM-DD"
-          )}`,
+          url: `${API_URL}/preview/${date.format("YYYY-MM-DD")}`,
           // url: window.location.href,
         });
         console.log("Shared successfully!");
@@ -107,7 +116,7 @@ const Taday = ({
 
       copyToClipboard(window.location.href);
       toast.success(
-        `Copied to your clip board! \nhttps://vikoeif.imranhasan.dev/preview/${date.format(
+        `Copied to your clip board! \n${API_URL}/preview/${date.format(
           "YYYY-MM-DD"
         )}`,
         {

@@ -274,6 +274,10 @@ app.get("/privacy-policy", (req, res) => {
   res.send(html);
 });
 
+app.post("pwa-check", (req, res) => {
+  console.log("new PWA user detected");
+  res.status(200).send("OK");
+});
 app.get("/", (req, res) => {
   res.send("Welcome to VIKO EIF Lecture schedule app");
 });
