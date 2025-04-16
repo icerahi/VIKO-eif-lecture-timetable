@@ -247,7 +247,7 @@ app.post("/pwa-user-counted", async (req, res) => {
       count = parseInt(data, 10) || 0;
     } catch (err) {
       //file might not exists
-      console.console.log("Initializing pwa_count.json");
+      console.log("Initializing pwa_count.json");
     }
     //increment and write back
     count += 1;
