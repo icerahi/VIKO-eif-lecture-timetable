@@ -236,47 +236,37 @@ function sendResponse(sender, text) {
     .catch((err) => console.log("Error sending message:", err.response.data));
 }
 
-//privacy policy for messager bot review
-app.get("/privacy-policy", (req, res) => {
-  const html = `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Privacy Policy and Terms of Service</title>
-</head>
-<body>
-  <h1>Privacy Policy and Terms of Service</h1>
-  
-  <h2>Privacy Policy</h2>
-  <p>We value your privacy. Our bot interacts with users in the class group to provide class schedules and related information. We do not store any user data.</p>
-  
-  <h2>Data Collection</h2>
-  <p>Our bot does not collect or store personal data from users. Any interactions are ephemeral and only serve to respond to user queries about the class schedule.</p>
-  
-  <h2>Data Deletion</h2>
-  <p>Since we do not store any user data, there is no data to delete.</p>
-  
-  <h2>Terms of Service</h2>
-  <p>By using the PI24E class bot, you agree to the following terms:</p>
-  <ul>
-    <li>The bot will respond to class schedule inquiries based on triggers like '#lecture today'.</li>
-    <li>The bot does not store or collect any personal data. It only provides responses to trigger-based queries.</li>
-    <li>You agree not to misuse or abuse the bot's functionality in the group.</li>
-    <li>If you have any questions regarding this policy or the bot's behavior, please reach out to the group admin.</li>
-  </ul>
-  
-  <h2>Contact Us</h2>
-  <p>If you have any questions regarding this privacy policy or terms of service, please contact us at: <a href="mailto:imranmdhasan07@gmail.com">imranmdhasan07@gmail.com</a></p>
-</body>
-</html>
-`;
-  res.send(html);
+const pwaCountFilePath = path.join(__dirname, "pwa_count.json");
+
+app.post("/pwa-user-counted", async (req, res) => {
+  try {
+    let count = 0;
+    //check if file exists and read it
+    try {
+      const data = await fs.readFile(pwaCountFilePath, "utf8");
+      count = parseInt(data, 10) || 0;
+    } catch (err) {
+      //file might not exists
+      console.console.log("Initializing pwa_count.json");
+    }
+    //increment and write back
+    count += 1;
+    await fs.writeFile(pwaCountFilePath, count.toString(), "utf8");
+    res.status(200).send("Counted");
+  } catch (err) {
+    console.log("Error updating PWA tracker", err);
+    res.status(500).send("Server Error");
+  }
 });
 
-app.post("pwa-check", (req, res) => {
-  console.log("new PWA user detected");
-  res.status(200).send("OK");
+app.get("/pwa-count", async (req, res) => {
+  try {
+    const data = await fs.readFile(pwaCountFilePath, "utf8");
+    const count = parseInt(data, 10) || 0;
+    res.json({ pwaUsers: count });
+  } catch (err) {
+    res.json({ pwaUsers: 0 });
+  }
 });
 app.get("/", (req, res) => {
   res.send("Welcome to VIKO EIF Lecture schedule app");

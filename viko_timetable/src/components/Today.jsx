@@ -55,11 +55,11 @@ const Taday = ({
       window.navigator.standalone === true; // check for android or ios
     setIsInstalled(isInstalled);
 
-    const pwaCheck = localStorage.getItem("installed");
+    const alreadySent = localStorage.getItem("pwa-user-counted");
 
-    if (isInstalled && !pwaCheck) {
+    if (isInstalled && !alreadySent) {
       console.log("inside function");
-      fetch(`${API_URL}/pwa-check`, { method: "POST" });
+      fetch(`${API_URL}/pwa-user-counted`, { method: "POST" });
 
       //prevent duplicate
       localStorage.setItem("installed", true);
