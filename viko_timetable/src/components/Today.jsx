@@ -56,7 +56,9 @@ const Taday = ({
     setIsInstalled(isInstalled);
 
     const pwaCheck = localStorage.getItem("installed");
+
     if (isInstalled && !pwaCheck) {
+      console.log("inside function");
       fetch(`${API_URL}/pwa-check`, { method: "POST" });
 
       //prevent duplicate
