@@ -100,7 +100,9 @@ const ReviewToast = ({ isInstalled }) => {
               marginBottom: "0.5rem",
             }}
           >
-            <em>Found this app helpful? Leave a quick feedback & your name!</em>
+            <em>
+              Is this app helpful to you? Leave a quick feedback & your name!
+            </em>
           </p>
           <textarea
             rows="3"
