@@ -72,12 +72,27 @@ const ReviewToast = () => {
       >
         X
       </button>
+
+      <p
+        style={{
+          position: "absolute",
+          top: "-15px",
+          right: "0",
+          background: "blue",
+          color: "white",
+          borderRadius: "10px 10px 0 10px",
+          fontSize: "1rem",
+          cursor: "pointer",
+        }}
+        aria-label="Close"
+      >
+        <em>👋 Hello, I'm your classmate Imran.</em>
+      </p>
       {!submitted ? (
         <>
           <p style={{ marginBottom: "0.5rem" }}>
-            👋 Hello, I'm your classmate Imran. Could you please give me
-            feedback on whether this app is helpful to you or not? (Please
-            specify your name)
+            Could you please give me feedback on whether this app is helpful to
+            you or not? (Please specify your name)
           </p>
           <textarea
             rows="3"
@@ -89,9 +104,7 @@ const ReviewToast = () => {
               marginBottom: "0.5rem",
               resize: "none",
             }}
-            placeholder="e.g. Hello, I'm Abc and I found this app helpful / not helpful
-
-"
+            placeholder="Write your feedback here..."
             value={feedback}
             onChange={(e) => setFeedback(e.target.value)}
           />
