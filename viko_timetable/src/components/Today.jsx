@@ -62,7 +62,7 @@ const Taday = ({
       fetch(`${API_URL}/pwa-user-counted`, { method: "POST" });
 
       //prevent duplicate
-      localStorage.setItem("installed", true);
+      localStorage.setItem("pwa-user-counted", true);
     }
 
     const handleAppInstalled = () => {
