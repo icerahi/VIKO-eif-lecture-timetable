@@ -34,6 +34,8 @@ const ReviewToast = () => {
       console.error("Error sending feedback:", err);
     }
   };
+  const handleClose = () => setShowToast(false);
+
   if (!showToast) return null;
   return (
     <div
@@ -51,6 +53,25 @@ const ReviewToast = () => {
         fontFamily: "sans-serif",
       }}
     >
+      {/* ❌ Close Button */}
+      <button
+        onClick={handleClose}
+        style={{
+          position: "absolute",
+          top: "-20px",
+          left: "-10px",
+          background: "transparent",
+          color: "red",
+
+          borderRadius: "50px",
+
+          fontSize: "30px",
+          cursor: "pointer",
+        }}
+        aria-label="Close"
+      >
+        X
+      </button>
       {!submitted ? (
         <>
           <p style={{ marginBottom: "0.5rem" }}>
