@@ -76,23 +76,32 @@ const ReviewToast = () => {
       <p
         style={{
           position: "absolute",
-          top: "-15px",
+          top: "-10px",
           right: "0",
-          background: "blue",
+          background: "#6110af",
           color: "white",
-          borderRadius: "10px 10px 0 10px",
+          borderRadius: "0 10px 0 10px",
           fontSize: "1rem",
           cursor: "pointer",
         }}
         aria-label="Close"
       >
-        <em>👋 Hello, I'm your classmate Imran.</em>
+        <em>👋 Hello, I'm your classmate Imran!</em>
       </p>
       {!submitted ? (
         <>
-          <p style={{ marginBottom: "0.5rem" }}>
-            Could you please give me feedback on whether this app is helpful to
-            you or not? (Please specify your name)
+          <p
+            style={{
+              marginBottom: "0.5rem",
+              fontSize: "1rem",
+              textAlign: "justify",
+            }}
+          >
+            <em>
+              {" "}
+              Could you please give me feedback on whether this app is helpful
+              to you or not? (Please specify your name)
+            </em>
           </p>
           <textarea
             rows="3"
