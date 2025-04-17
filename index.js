@@ -158,166 +158,99 @@ app.get("/ice/delete-all", async (req, res) => {
   }
 });
 
-//webhook for messenger group bot
-const PAGE_VERIFY_TOKEN = process.env.PAGE_VERIFY_TOKEN; //any string
-const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
+// 🧾 JSONBin.io Credentials
+const JSONBIN_API_KEY = process.env.JSONBIN_API_KEY;
+const PWA_BIN_ID = process.env.PWA_BIN_ID;
+const FEEDBACK_BIN_ID = process.env.FEEDBACK_BIN_ID;
+const JSON_MASTERKEY = process.env.JSON_MASTERKEY;
+const JSONBIN_BASE_URL = "https://api.jsonbin.io/v3/b";
 
-//web hook verification
-app.get("/webhook", (req, res) => {
-  const mode = req.query["hub.mode"];
-  const token = req.query["hub.verify_token"];
-  const challenge = req.query["hub.challenge"];
-
-  if (mode === "subscribe" && token === PAGE_VERIFY_TOKEN) {
-    console.log("Webhook verified");
-    res.status(200).send(challenge);
-  } else {
-    res.sendStatus(403);
-  }
-});
-
-//receiving messages
-app.post("/webhook", (req, res) => {
-  const body = req.body;
-
-  if (body.object === "page") {
-    body.entry.forEach((entry) => {
-      const messaging = entry.messaging;
-      // const sender = event.sender.id;
-      messaging.forEach((messageEvent) => {
-        console.log(messageEvent);
-        if (messageEvent.message && messageEvent.message.text) {
-          const userMessage = messageEvent.message.text.toLowerCase();
-          const userId = messageEvent.sender.id;
-          console.log(userMessage);
-          //handle commands
-          if (userMessage.includes("#hello")) {
-            sendResponse(userId, "Hello!");
-          }
-          if (userMessage.includes("#lecture today")) {
-            const schedule =
-              "Today's class schedule:\n- 10:00 AM: Math\n- 12:00 PM: Physics\n- 2:00 PM: Computer Science\n- 4:00 PM: English";
-            sendResponse(userId, schedule);
-          }
-
-          if (userMessage.includes("#lecture tomorrow")) {
-            const schedule =
-              "Tomorrow's class schedule:\n- 10:00 AM: Programming\n- 12:00 PM: Data Structure and Algorithom\n- 2:00 PM: Computer Graphics\n- 4:00 PM: Environmental studies";
-            sendResponse(userId, schedule);
-          }
-
-          if (userMessage.includes("#privacy")) {
-            const privacyMessage =
-              "We respect your privacy. We do not store any data. You can read our full privacy policy at: https://vikoeif.imranhasan.dev/privacy-policy";
-            sendResponse(userId, privacyMessage);
-          }
-
-          if (userMessage.includes("#help")) {
-            const helpMessage =
-              "Here are the commands you can use:\n- #lecture today: Get today's class schedule\n- #lecture tomorrow: Get tomorrows's class schedule\n- #privacy: Get the privacy policy\n- #help: Get this list of commands";
-            sendResponse(userId, helpMessage);
-          }
-        }
-      });
-    });
-    res.sendStatus(200);
-  }
-});
-
-function sendResponse(sender, text) {
-  axios
-    .post(
-      `https://graph.facebook.com/v12.0/me/messages?access_token=${PAGE_ACCESS_TOKEN}`,
-      {
-        recipient: { id: sender },
-        message: { text },
-      }
-    )
-    .catch((err) => console.log("Error sending message:", err.response.data));
-}
-
-const pwaCountFilePath = path.join(__dirname, "pwa_count.json");
+//pwa installation count and feedback
 
 app.post("/pwa-user-counted", async (req, res) => {
   try {
-    let count = 0;
-    //check if file exists and read it
-    try {
-      const data = await fs.readFile(pwaCountFilePath, "utf8");
-      count = parseInt(data, 10) || 0;
-    } catch (err) {
-      //file might not exists
-      console.log("Initializing pwa_count.json");
-    }
-    //increment and write back
-    count += 1;
-    await fs.writeFile(pwaCountFilePath, count.toString(), "utf8");
-    res.status(200).send("Counted");
+    const response = await axios.get(`${JSONBIN_BASE_URL}/${PWA_BIN_ID}`, {
+      headers: { "X-Master-Key": JSON_MASTERKEY },
+    });
+    const currentCount = response.data.record.count || 0;
+    const newCount = currentCount + 1;
+    await axios.put(
+      `${JSONBIN_BASE_URL}/${PWA_BIN_ID}`,
+      { count: newCount },
+      {
+        headers: {
+          "X-Master-Key": JSON_MASTERKEY,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    res.json({ message: "Count updated", count: newCount });
   } catch (err) {
-    console.log("Error updating PWA tracker", err);
-    res.status(500).send("Server Error");
+    console.log(err);
+    res.status(500).json({ error: "Error updating count" });
   }
 });
 
 app.get("/pwa-count", async (req, res) => {
   try {
-    const data = await fs.readFile(pwaCountFilePath, "utf8");
-    const count = parseInt(data, 10) || 0;
-    res.json({ pwaUsers: count });
+    const response = await axios.get(
+      `${JSONBIN_BASE_URL}/${PWA_BIN_ID}/latest`,
+      {
+        headers: { "X-Master-Key": JSON_MASTERKEY },
+      }
+    );
+
+    res.json({ count: response.data.record.count || 0 });
   } catch (err) {
-    res.json({ pwaUsers: 0 });
+    res.status(500).json({ error: "Error fetching count" });
   }
 });
 
-const feedBackFile = path.join(__dirname, "feedback.json");
-
+// ✍️ Submit feedback
 app.post("/send-feedback", async (req, res) => {
   const { message } = req.body;
   if (!message) return res.status(400).json({ error: "Message is required" });
 
   try {
-    let feedbacks = [];
-
-    // Check if file exists and read existing data
-    try {
-      const data = await fs.readFile(feedBackFile, "utf-8");
-      feedbacks = JSON.parse(data);
-    } catch (err) {
-      // if file doesn't exist, just start fresh
-      if (err.code !== "ENOENT") throw err;
-    }
-
-    // Add new feedback
-    feedbacks.push({
-      message,
-      date: new Date().toISOString(),
+    const response = await axios.get(`${JSONBIN_BASE_URL}/${FEEDBACK_BIN_ID}`, {
+      headers: { "X-Master-Key": JSON_MASTERKEY },
     });
 
-    // Save back to file
-    await fs.writeFile(feedBackFile, JSON.stringify(feedbacks, null, 2));
+    const feedbacks = response.data.record.feedbacks || [];
+    feedbacks.push({ message, date: new Date().toISOString() });
 
-    res.status(200).json({ success: true });
-  } catch (error) {
-    console.error("Error saving feedback:", error);
-    res.status(500).json({ error: "Internal server error" });
+    await axios.put(
+      `${JSONBIN_BASE_URL}/${FEEDBACK_BIN_ID}`,
+      { feedbacks },
+      {
+        headers: {
+          "X-Master-Key": JSON_MASTERKEY,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    res.json({ message: "Thank you for your feedback!" });
+  } catch (err) {
+    res.status(500).json({ error: "Error saving feedback" });
   }
 });
 
+// 📄 Get feedbacks
 app.get("/feedbacks", async (req, res) => {
   try {
-    const data = await fs.readFile(feedBackFile, "utf-8");
-    const feedbacks = JSON.parse(data);
-    res.status(200).json(feedbacks);
+    const response = await axios.get(
+      `${JSONBIN_BASE_URL}/${FEEDBACK_BIN_ID}/latest`,
+      {
+        headers: { "X-Master-Key": JSON_MASTERKEY },
+      }
+    );
+
+    res.json({ feedbacks: response.data.record.feedbacks || [] });
   } catch (err) {
-    if (err.code === "ENOENT") {
-      // If file doesn't exist yet, return empty array
-      return res.status(200).json([]);
-    }
-    console.error("Error reading feedback file:", err);
-    res.status(500).json({ error: "Failed to load feedbacks" });
+    res.status(500).json({ error: "Error fetching feedback" });
   }
 });
-
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
