@@ -19,7 +19,6 @@ const ReviewToast = ({ isInstalled }) => {
         isInstalled ? 5000 : 10000 // if user is installed show after 5 sec else show after 10 sec
       ); //show after 5s
     }
-    console.log("isinstalled:", isInstalled);
   }, []);
 
   const handleSubmit = async () => {
@@ -86,7 +85,6 @@ const ReviewToast = ({ isInstalled }) => {
           background: "#6110af",
           color: "white",
           borderRadius: "0 10px 0 10px",
-          fontSize: "1rem",
           cursor: "pointer",
         }}
         aria-label="Close"
@@ -98,15 +96,10 @@ const ReviewToast = ({ isInstalled }) => {
           <p
             style={{
               marginBottom: "0.5rem",
-              fontSize: "1rem",
-              textAlign: "justify",
             }}
           >
-            <em>
-              {" "}
-              Could you please give me feedback on whether this app is helpful
-              to you or not? (Please specify your name)
-            </em>
+            Could you please give me feedback on whether this app is helpful to
+            you or not? (Please specify your name)
           </p>
           <textarea
             rows="3"
@@ -117,6 +110,7 @@ const ReviewToast = ({ isInstalled }) => {
               border: "1px solid #444",
               marginBottom: "0.5rem",
               resize: "none",
+              fontStyle: "italic",
             }}
             placeholder="Write your feedback here..."
             value={feedback}
