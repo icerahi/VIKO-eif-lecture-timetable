@@ -153,8 +153,7 @@ const Taday = ({
             </h1>
             {/* copy button  */}
             <button
-              style={{ borderRadius: "0px 15px 0px 10px" }}
-              className="p-1 bg-indigo-900 shadow-lg border-2 border-indigo-500  m-1 transition-all duration-500"
+              className="p-1 bg-black border-l-2 border-l-white  m-1"
               title={`Copy to clipboard`}
               onClick={handleShare}
             >

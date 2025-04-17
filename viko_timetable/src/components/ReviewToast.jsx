@@ -16,7 +16,7 @@ const ReviewToast = ({ isInstalled }) => {
         () => {
           setShowToast(true);
         },
-        isInstalled ? 5000 : 10000 // if user is installed show after 5 sec else show after 10 sec
+        isInstalled ? 5000 : 15000 // if user is installed show after 5 sec else show after 10 sec
       ); //show after 5s
     }
   }, []);
@@ -43,6 +43,7 @@ const ReviewToast = ({ isInstalled }) => {
   if (!showToast) return null;
   return (
     <div
+      className=""
       style={{
         position: "fixed",
         bottom: "1rem",
@@ -85,6 +86,7 @@ const ReviewToast = ({ isInstalled }) => {
           background: "#6110af",
           color: "white",
           borderRadius: "0 10px 0 10px",
+          fontSize: "1rem",
           cursor: "pointer",
         }}
         aria-label="Close"
@@ -98,8 +100,7 @@ const ReviewToast = ({ isInstalled }) => {
               marginBottom: "0.5rem",
             }}
           >
-            Could you please give me feedback on whether this app is helpful to
-            you or not? (Please specify your name)
+            <em>Found this app helpful? Leave a quick feedback & your name!</em>
           </p>
           <textarea
             rows="3"
@@ -110,7 +111,6 @@ const ReviewToast = ({ isInstalled }) => {
               border: "1px solid #444",
               marginBottom: "0.5rem",
               resize: "none",
-              fontStyle: "italic",
             }}
             placeholder="Write your feedback here..."
             value={feedback}
