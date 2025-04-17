@@ -167,7 +167,7 @@ const JSONBIN_BASE_URL = "https://api.jsonbin.io/v3/b";
 
 //pwa installation count and feedback
 
-app.post("/pwa-user-counted", async (req, res) => {
+app.post("/count-pwa-user", async (req, res) => {
   try {
     const response = await axios.get(`${JSONBIN_BASE_URL}/${PWA_BIN_ID}`, {
       headers: { "X-Master-Key": JSON_MASTERKEY },
@@ -191,7 +191,7 @@ app.post("/pwa-user-counted", async (req, res) => {
   }
 });
 
-app.get("/pwa-count", async (req, res) => {
+app.get("/total-pwa-users", async (req, res) => {
   try {
     const response = await axios.get(
       `${JSONBIN_BASE_URL}/${PWA_BIN_ID}/latest`,
@@ -237,7 +237,7 @@ app.post("/send-feedback", async (req, res) => {
 });
 
 // 📄 Get feedbacks
-app.get("/feedbacks", async (req, res) => {
+app.get("/total-feedbacks", async (req, res) => {
   try {
     const response = await axios.get(
       `${JSONBIN_BASE_URL}/${FEEDBACK_BIN_ID}/latest`,

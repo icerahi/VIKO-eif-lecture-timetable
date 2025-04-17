@@ -60,7 +60,7 @@ const Taday = ({
     if (isInstalled && !alreadySent) {
       localStorage.removeItem("pwa-user-counted"); //will replace later
 
-      fetch(`${API_URL}/pwa-user-counted`, { method: "POST" });
+      fetch(`${API_URL}/count-pwa-user`, { method: "POST" });
 
       //prevent duplicate
       localStorage.setItem("pwa-count", true);
