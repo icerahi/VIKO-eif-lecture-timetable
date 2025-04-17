@@ -17,7 +17,6 @@ import Today from "./components/Today";
 import { useContext } from "react";
 import { AppContext } from "./context/AppContext";
 import { ToastContainer } from "react-toastify";
-import ReviewToast from "./components/ReviewToast";
 
 // 🔹 Declare debounce function globally (outside the component)
 const debounce = (func, delay) => {
@@ -218,7 +217,6 @@ const App = () => {
             }
           />
         </Routes>
-        <ReviewToast />
         <ToastContainer
           toastClassName="text-white rounded-lg shadow-lg "
           limit={1}

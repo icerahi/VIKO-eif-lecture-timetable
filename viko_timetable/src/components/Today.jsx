@@ -8,6 +8,7 @@ import InstallPWAButton from "./InstallPWAButton";
 import { useEffect, useState } from "react";
 import { useContext } from "react";
 import { AppContext } from "../context/AppContext";
+import ReviewToast from "./ReviewToast";
 
 const Taday = ({
   groups,
@@ -251,6 +252,7 @@ const Taday = ({
       </div>
       <div className="info-container">
         {!isInstalled && <InstallPWAButton />}
+        {isInstalled && <ReviewToast />}
       </div>
     </div>
   );
