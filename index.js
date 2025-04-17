@@ -268,8 +268,54 @@ app.get("/pwa-count", async (req, res) => {
     res.json({ pwaUsers: 0 });
   }
 });
-app.get("/", (req, res) => {
-  res.send("Welcome to VIKO EIF Lecture schedule app");
+
+const feedBackFile = path.join(__dirname, "feedback.json");
+
+app.post("/send-feedback", async (req, res) => {
+  const { message } = req.body;
+  if (!message) return res.status(400).json({ error: "Message is required" });
+
+  try {
+    let feedbacks = [];
+
+    // Check if file exists and read existing data
+    try {
+      const data = await fs.readFile(feedBackFile, "utf-8");
+      feedbacks = JSON.parse(data);
+    } catch (err) {
+      // if file doesn't exist, just start fresh
+      if (err.code !== "ENOENT") throw err;
+    }
+
+    // Add new feedback
+    feedbacks.push({
+      message,
+      date: new Date().toISOString(),
+    });
+
+    // Save back to file
+    await fs.writeFile(feedBackFile, JSON.stringify(feedbacks, null, 2));
+
+    res.status(200).json({ success: true });
+  } catch (error) {
+    console.error("Error saving feedback:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.get("/feedbacks", async (req, res) => {
+  try {
+    const data = await fs.readFile(feedBackFile, "utf-8");
+    const feedbacks = JSON.parse(data);
+    res.status(200).json(feedbacks);
+  } catch (err) {
+    if (err.code === "ENOENT") {
+      // If file doesn't exist yet, return empty array
+      return res.status(200).json([]);
+    }
+    console.error("Error reading feedback file:", err);
+    res.status(500).json({ error: "Failed to load feedbacks" });
+  }
 });
 
 const PORT = process.env.PORT || 3000;
