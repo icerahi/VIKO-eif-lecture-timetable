@@ -9,7 +9,8 @@ const ReviewToast = () => {
   const { API_URL } = useContext(AppContext);
 
   useEffect(() => {
-    const hasSeen = localStorage.getItem("reviewOptionSeen");
+    localStorage.removeItem("reviewOptionSeen"); //just removing
+    const hasSeen = localStorage.getItem("reviewOptionSeen1");
     if (!hasSeen) {
       setTimeout(() => {
         setShowToast(true);
@@ -27,7 +28,7 @@ const ReviewToast = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: feedback }),
       });
-      localStorage.setItem("reviewOptionSeen", true);
+      localStorage.setItem("reviewOptionSeen1", true);
       setSubmitted(true);
       setTimeout(() => setShowToast(false), 3000);
     } catch (err) {
