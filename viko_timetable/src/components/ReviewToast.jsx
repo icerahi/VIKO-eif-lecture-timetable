@@ -19,6 +19,7 @@ const ReviewToast = ({ isInstalled }) => {
         isInstalled ? 5000 : 10000 // if user is installed show after 5 sec else show after 10 sec
       ); //show after 5s
     }
+    console.log("isinstalled:", isInstalled);
   }, []);
 
   const handleSubmit = async () => {
