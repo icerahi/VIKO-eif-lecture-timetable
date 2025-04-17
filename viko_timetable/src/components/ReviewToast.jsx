@@ -2,7 +2,7 @@ import { useContext, useEffect } from "react";
 import { useState } from "react";
 import { AppContext } from "../context/AppContext";
 
-const ReviewToast = () => {
+const ReviewToast = ({ isInstalled }) => {
   const [showToast, setShowToast] = useState(false);
   const [feedback, setFeedback] = useState("");
   const [submitted, setSubmitted] = useState(false);
@@ -12,9 +12,12 @@ const ReviewToast = () => {
     localStorage.removeItem("reviewOptionSeen"); //just removing
     const hasSeen = localStorage.getItem("reviewOptionSeen1");
     if (!hasSeen) {
-      setTimeout(() => {
-        setShowToast(true);
-      }, 5000); //show after 5s
+      setTimeout(
+        () => {
+          setShowToast(true);
+        },
+        isInstalled ? 5000 : 10000 // if user is installed show after 5 sec else show after 10 sec
+      ); //show after 5s
     }
   }, []);
 

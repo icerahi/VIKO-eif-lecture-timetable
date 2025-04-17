@@ -252,7 +252,7 @@ const Taday = ({
       </div>
       <div className="info-container">
         {!isInstalled && <InstallPWAButton />}
-        {isInstalled && <ReviewToast />}
+        <ReviewToast inInstalled={isInstalled} />
       </div>
     </div>
   );
