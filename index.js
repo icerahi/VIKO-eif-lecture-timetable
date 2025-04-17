@@ -159,7 +159,7 @@ app.get("/ice/delete-all", async (req, res) => {
 });
 
 // 🧾 JSONBin.io Credentials
-const JSONBIN_API_KEY = process.env.JSONBIN_API_KEY;
+
 const PWA_BIN_ID = process.env.PWA_BIN_ID;
 const FEEDBACK_BIN_ID = process.env.FEEDBACK_BIN_ID;
 const JSON_MASTERKEY = process.env.JSON_MASTERKEY;
