@@ -33,6 +33,7 @@ const App = () => {
 
   //firebise
   const [latestPost, setLatestPost] = useState(null);
+  console.log("latest postss:", latestPost);
   const [allPosts, setAllPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
   const [date, setDate] = useState(() => {
