@@ -165,9 +165,9 @@ const Taday = ({
             {lectures.length == 0 && (
               <p>No lectures information available for the selected day!</p>
             )}
-            {lectures?.map((lecture) => (
+            {lectures?.map((lecture,index) => (
               <div
-                key={lecture.periodno}
+                key={index}
                 className={`${
                   CheckLectureStatus(lecture)?.room === "-"
                     ? "no-lecture"

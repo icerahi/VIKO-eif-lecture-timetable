@@ -36,6 +36,22 @@
         s1.charset = "UTF-8";
         s1.setAttribute("crossorigin", "*");
         s0.parentNode.insertBefore(s1, s0);
+
+        // listen for when the widget is fully loaded
+        s1.onload = function () {
+          // After the Tawk widget is loaded, apply styles
+          Tawk_API.onLoad = function () {
+            var chatContainer = document.querySelector(".widget-visible");
+            var container = chatContainer.querySelector("iframe");
+            console.log(container);
+            if (container) {
+              // Apply opacity after the widget is loaded
+              // container.style.opacity = "0.6";
+              // container.style.transition = "opacity 0.3s ease";
+              container.style.bottom = "3rem";
+            }
+          };
+        };
       })();
     </script>
     <!--End of Tawk.to Script-->
