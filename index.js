@@ -128,7 +128,7 @@ const takeScreenshot = async (url) => {
 
 app.get("/generate_og_image/*", async (req, res) => {
   const url = req.originalUrl.replace("/generate_og_image/", "");
-
+  console.log(url);
   if (!url) {
     return res.status(400).send("URL is required");
   }

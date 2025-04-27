@@ -98,7 +98,7 @@ const Taday = ({
   const handleShare = async () => {
     try {
       const response = await fetch(
-        `${API_URL}/generate_og_image/url=${window.location.href}`
+        `${API_URL}/generate_og_image/${window.location.href}`
       );
       console.log(window.location.href);
       const message = await response.json();
