@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { useContext } from "react";
 import { AppContext } from "../context/AppContext";
 import ReviewToast from "./ReviewToast";
+import { useSearchParams } from "react-router-dom";
 
 const Taday = ({
   groups,
@@ -24,6 +25,7 @@ const Taday = ({
   const { copyToClipboard } = useClipboard();
   const [isInstalled, setIsInstalled] = useState(false);
   const { API_URL } = useContext(AppContext);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const CheckLectureStatus = (lecture) => {
     if (changedLectures.some((item) => item.paskaita === lecture.periodno)) {
@@ -34,8 +36,9 @@ const Taday = ({
 
   const handleGroupChange = (e) => {
     const groupObj = JSON.parse(e.target.value);
-    setSelectCurrentGroup(groupObj);
+    setSelectCurrentGroup(e.target.value);
     localStorage.setItem("current_group", e.target.value);
+    setSearchParams({ date: date.format("YYYY-MM-DD"), group: groupObj.short });
   };
 
   const checkDate = (date) => {
@@ -90,7 +93,7 @@ const Taday = ({
     return () => {
       window.removeEventListener("appinstalled", handleAppInstalled);
     };
-  }, []);
+  }, [selectCurrentGroup]);
 
   const handleShare = async () => {
     try {
@@ -104,25 +107,23 @@ const Taday = ({
     }
 
     // Check if Web Share API is available (for mobile users)
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: "VIKO EIF Timetable App",
-          url: `${API_URL}/preview/${date.format("YYYY-MM-DD")}`,
-          // url: window.location.href,
-        });
-        console.log("Shared successfully!");
-      } catch (error) {
-        console.error("Error sharing:", error);
-      }
-    } else {
-      // Fallback for desktop or unsupported mobile browsers: Copy the link to clipboard
 
+    try {
+      await navigator.share({
+        title: "VIKO EIF Timetable App",
+        url: `${API_URL}/preview/${searchParams.get(
+          "group"
+        )}/${searchParams.get("date")}`,
+        // url: window.location.href,
+      });
+      console.log("Shared successfully!");
+    } catch (error) {
+      console.error("Error sharing:", error);
       copyToClipboard(window.location.href);
       toast.success(
-        `Copied to your clip board! \n${API_URL}/preview/${date.format(
-          "YYYY-MM-DD"
-        )}`,
+        `Copied to your clip board! \n${API_URL}/preview/${searchParams.get(
+          "group"
+        )}/${searchParams.get("date")}`,
         {
           style: { whiteSpace: "pre-line" },
           position: "top-left",
@@ -138,6 +139,7 @@ const Taday = ({
       );
     }
   };
+
   return (
     <div
       id="screenshot"
@@ -165,7 +167,7 @@ const Taday = ({
             {lectures.length == 0 && (
               <p>No lectures information available for the selected day!</p>
             )}
-            {lectures?.map((lecture,index) => (
+            {lectures?.map((lecture, index) => (
               <div
                 key={index}
                 className={`${
@@ -239,7 +241,7 @@ const Taday = ({
             className="btn-primary hover:scale-105 transition-all duration-500"
             onChange={handleGroupChange}
             id=""
-            value={JSON.stringify(selectCurrentGroup)}
+            value={selectCurrentGroup}
           >
             {groups.map((group, index) => (
               <option key={index} value={JSON.stringify(group)}>

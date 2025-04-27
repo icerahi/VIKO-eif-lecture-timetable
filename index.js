@@ -57,36 +57,38 @@ app.post("/current", async (req, res) => {
 });
 
 let defaultImage = false;
-function getOGImageURL(req, date) {
+function getOGImageURL(req, group, date) {
   if (defaultImage) {
     return `${req.protocol}://${req.get("host")}/default/default.png`;
   }
-  return `${req.protocol}://${req.get("host")}/images/${date}.png`;
+  return `${req.protocol}://${req.get("host")}/images/${group}/${date}.png`;
 }
 
 // Route to handle the preview_image request
-app.get("/preview/:date", async (req, res) => {
-  const { date } = req.params;
+app.get("/preview/:group/:date/", async (req, res) => {
+  const { date, group } = req.params;
 
   const html = `
  <!DOCTYPE html>
     <html>
     <head>
-      <meta property="og:title" content="Lecture Schedule for ${moment(date)
-        .format("ddd MMM DD YYYY")
-        .toString()}" />
+      <meta property="og:title" content="Lecture Schedule for ${group} - ${moment(
+    date
+  )
+    .format("ddd MMM DD YYYY")
+    .toString()}" />
       <meta property="og:description" content="VIKO EIF Timetable" />
-      <meta property="og:image" content="${getOGImageURL(req, date)}" />
+      <meta property="og:image" content="${getOGImageURL(req, group, date)}" />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
-      <meta property="og:url" content="https://viko-eif.imranhasan.dev/preview/${date.toString()}" />
+      <meta property="og:url" content="https://viko-eif.imranhasan.dev/preview/${group}/${date.toString()}" />
       <meta property="og:type" content="article" />
-      <title>VIKO EIF Timetable-${date.toString()}</title>
+      <title>VIKO EIF ${group}-${date.toString()}</title>
     </head>
     <body>
       <p>Redirecting...</p>
       <script>
-        window.location.href = "https://viko-eif.imranhasan.dev/?date=${date}";
+        window.location.href = "https://viko-eif.imranhasan.dev/?date=${date}&group=${group}";
       </script>
     </body>
     </html>`;
@@ -98,6 +100,11 @@ function extractDate(url) {
   const date = parseURL.searchParams.get("date");
   return date;
 }
+function extractGroup(url) {
+  const parseURL = new URL(url);
+  const group = parseURL.searchParams.get("group");
+  return group;
+}
 
 const takeScreenshot = async (url) => {
   const response = await fetch(
@@ -106,10 +113,16 @@ const takeScreenshot = async (url) => {
   const imageBuffer = await response.arrayBuffer();
 
   await fs.writeFile(
-    path.join(__dirname, "public/images", `${extractDate(url)}.png`),
+    path.join(
+      __dirname,
+      "public/images",
+      `${extractGroup(url)}_${extractDate(url)}.png`
+    ),
     Buffer.from(imageBuffer)
   );
-  console.log(`Screenshot saved as ${extractDate(url)}.png`);
+  console.log(
+    `Screenshot saved as ${extractGroup(url)}_${extractDate(url)}.png`
+  );
 };
 
 app.get("/generate_og_image", async (req, res) => {
@@ -118,24 +131,28 @@ app.get("/generate_og_image", async (req, res) => {
     return res.status(400).send("URL is required");
   }
   const date = extractDate(url);
-
-  const imagePath = path.join(__dirname, "public/images", `${date}.png`);
+  const group = extractGroup(url);
+  const imagePath = path.join(
+    __dirname,
+    "public/images",
+    `${group}_${date}.png`
+  );
 
   try {
     // Check if image already exists
     await fs.access(imagePath);
     console.log("Serving from Existing");
     defaultImage = false;
-    return res.json({ image: getOGImageURL(req, date) });
+    return res.json({ image: getOGImageURL(req, group, date) });
   } catch (err) {
     // File doesn't exist, proceed to generate it
     try {
       await takeScreenshot(url);
       defaultImage = false;
-      return res.json({ image: getOGImageURL(req, date) });
+      return res.json({ image: getOGImageURL(req, group, date) });
     } catch (screenshotErr) {
       defaultImage = true;
-      return res.json({ image: getOGImageURL(req, date) });
+      return res.json({ image: getOGImageURL(req, group, date) });
       console.error("Error capturing screenshot:", screenshotErr);
       return res.status(500).send("Error capturing screenshot");
     }
@@ -161,7 +178,6 @@ app.get("/ice/delete-all", async (req, res) => {
 // 🧾 JSONBin.io Credentials
 
 const PWA_BIN_ID = process.env.PWA_BIN_ID;
-const FEEDBACK_BIN_ID = process.env.FEEDBACK_BIN_ID;
 const JSON_MASTERKEY = process.env.JSON_MASTERKEY;
 const JSONBIN_BASE_URL = "https://api.jsonbin.io/v3/b";
 
@@ -203,52 +219,6 @@ app.get("/total-pwa-users", async (req, res) => {
     res.json({ count: response.data.record.count || 0 });
   } catch (err) {
     res.status(500).json({ error: "Error fetching count" });
-  }
-});
-
-// ✍️ Submit feedback
-app.post("/send-feedback", async (req, res) => {
-  const { message } = req.body;
-  if (!message) return res.status(400).json({ error: "Message is required" });
-
-  try {
-    const response = await axios.get(`${JSONBIN_BASE_URL}/${FEEDBACK_BIN_ID}`, {
-      headers: { "X-Master-Key": JSON_MASTERKEY },
-    });
-
-    const feedbacks = response.data.record.feedbacks || [];
-    feedbacks.push({ message, date: new Date().toISOString() });
-
-    await axios.put(
-      `${JSONBIN_BASE_URL}/${FEEDBACK_BIN_ID}`,
-      { feedbacks },
-      {
-        headers: {
-          "X-Master-Key": JSON_MASTERKEY,
-          "Content-Type": "application/json",
-        },
-      }
-    );
-
-    res.json({ message: "Thank you for your feedback!" });
-  } catch (err) {
-    res.status(500).json({ error: "Error saving feedback" });
-  }
-});
-
-// 📄 Get feedbacks
-app.get("/total-feedbacks", async (req, res) => {
-  try {
-    const response = await axios.get(
-      `${JSONBIN_BASE_URL}/${FEEDBACK_BIN_ID}/latest`,
-      {
-        headers: { "X-Master-Key": JSON_MASTERKEY },
-      }
-    );
-
-    res.json({ feedbacks: response.data.record.feedbacks || [] });
-  } catch (err) {
-    res.status(500).json({ error: "Error fetching feedback" });
   }
 });
 

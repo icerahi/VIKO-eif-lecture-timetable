@@ -62,21 +62,29 @@ const App = () => {
     const groups = localStorage.getItem("groups");
     return groups ? JSON.parse(groups) : [];
   });
-
+  console.log(groups);
   const [currentDayLectureInfo, setCurrentDayLectureInfo] = useState([]);
 
   const [selectCurrentGroup, setSelectCurrentGroup] = useState(() => {
-    const savedGroup = localStorage.getItem("current_group");
-    return savedGroup
-      ? JSON.parse(savedGroup)
-      : { id: "-910", name: "PI24E", short: "PI24E" };
-  });
+    const paramGroup = searchParams.get("group") || "PI24E";
 
+    const group = groups.find((g) => g.short === paramGroup.toUpperCase());
+
+    return group
+      ? JSON.stringify(group)
+      : localStorage.getItem("current_group") ||
+          JSON.stringify({
+            id: "-910",
+            name: "PI24E",
+            short: "PI24E",
+          });
+  });
+  console.log("select current group:", selectCurrentGroup);
   const current = useFetch(
     `${API_URL}/current`,
-    getPayload(date, date, false, selectCurrentGroup.id),
+    getPayload(date, date, false, JSON.parse(selectCurrentGroup).id),
     date,
-    selectCurrentGroup.id
+    JSON.parse(selectCurrentGroup).id
   );
   useEffect(() => {
     if (all_info) {
@@ -175,28 +183,32 @@ const App = () => {
     setFilteredPosts(currentDayFilter);
 
     // set current date for home url
-    searchParams.get("date") || setSearchParams({ date: date });
+    searchParams.get("date") ||
+      setSearchParams({
+        date: date,
+        group: JSON.parse(selectCurrentGroup).short,
+      });
   }, [allPosts, selectCurrentGroup]); //allPosts
 
   const setToday = () => {
     const date = moment().format("YYYY-MM-DD");
-    setSearchParams({ date });
+    setSearchParams({ date, group: selectCurrentGroup?.short });
     setDate(date);
   };
   const setNextDay = () => {
     const date = searchParams.get("date") || moment();
     const nextDate = moment(date).add(1, "days").format("YYYY-MM-DD");
-    setSearchParams({ date: nextDate });
+    setSearchParams({ date: nextDate, group: selectCurrentGroup?.short });
 
     setDate(nextDate);
   };
   const setPrevDay = () => {
     const date = searchParams.get("date") || moment();
     const prevDate = moment(date).subtract(1, "days").format("YYYY-MM-DD");
-    setSearchParams({ date: prevDate });
+    setSearchParams({ date: prevDate, group: selectCurrentGroup.short });
     setDate(prevDate);
   };
-
+  console.log("select current group:", selectCurrentGroup);
   return (
     <>
       <main>
