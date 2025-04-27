@@ -126,8 +126,8 @@ const takeScreenshot = async (url) => {
   );
 };
 
-app.get("/generate_og_image", async (req, res) => {
-  const { url } = req.query;
+app.get("/generate_og_image/*", async (req, res) => {
+  const { url } = req.params[0];
   console.log(url);
   if (!url) {
     return res.status(400).send("URL is required");
