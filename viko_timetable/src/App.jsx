@@ -192,20 +192,26 @@ const App = () => {
 
   const setToday = () => {
     const date = moment().format("YYYY-MM-DD");
-    setSearchParams({ date, group: selectCurrentGroup?.short });
+    setSearchParams({ date, group: JSON.parse(selectCurrentGroup).short });
     setDate(date);
   };
   const setNextDay = () => {
     const date = searchParams.get("date") || moment();
     const nextDate = moment(date).add(1, "days").format("YYYY-MM-DD");
-    setSearchParams({ date: nextDate, group: selectCurrentGroup?.short });
+    setSearchParams({
+      date: nextDate,
+      group: JSON.parse(selectCurrentGroup).short,
+    });
 
     setDate(nextDate);
   };
   const setPrevDay = () => {
     const date = searchParams.get("date") || moment();
     const prevDate = moment(date).subtract(1, "days").format("YYYY-MM-DD");
-    setSearchParams({ date: prevDate, group: selectCurrentGroup.short });
+    setSearchParams({
+      date: prevDate,
+      group: JSON.parse(selectCurrentGroup).short,
+    });
     setDate(prevDate);
   };
   console.log("select current group:", selectCurrentGroup);
