@@ -101,6 +101,7 @@ function extractDate(url) {
   return date;
 }
 function extractGroup(url) {
+  console.log(url);
   const parseURL = new URL(url);
   const group = parseURL.searchParams.get("group");
   return group;
