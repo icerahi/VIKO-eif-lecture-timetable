@@ -96,17 +96,6 @@ const Taday = ({
   }, [selectCurrentGroup]);
 
   const handleShare = async () => {
-    try {
-      const response = await fetch(
-        `${API_URL}/generate_og_image/${window.location.href}`
-      );
-      console.log(window.location.href);
-      const message = await response.json();
-      console.log("Message from OG image:");
-    } catch (err) {
-      console.log("Error generating og image:", err);
-    }
-
     // Check if Web Share API is available (for mobile users)
 
     if (navigator.share) {
@@ -141,6 +130,16 @@ const Taday = ({
           transition: Zoom,
         }
       );
+    }
+    try {
+      const response = await fetch(
+        `${API_URL}/generate_og_image/${window.location.href}`
+      );
+      console.log(window.location.href);
+      const message = await response.json();
+      console.log("Message from OG image:");
+    } catch (err) {
+      console.log("Error generating og image:", err);
     }
   };
 

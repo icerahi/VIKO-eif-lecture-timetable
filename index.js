@@ -109,7 +109,11 @@ function extractGroup(url) {
 
 const takeScreenshot = async (url) => {
   const response = await fetch(
-    `https://api.screenshotone.com/take?access_key=${process.env.SCREENSHOT_ACCESS_KEY}&url=${url}&viewport_width=1200&viewport_height=630&delay=0&timeout=60&image_quality=80`
+    `https://api.screenshotone.com/take?access_key=${
+      process.env.SCREENSHOT_ACCESS_KEY
+    }&url=${encodeURIComponent(
+      url
+    )}&viewport_width=1200&viewport_height=630&delay=0&timeout=60&image_quality=80`
   );
   const imageBuffer = await response.arrayBuffer();
 
