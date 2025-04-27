@@ -183,7 +183,7 @@ const App = () => {
     setFilteredPosts(currentDayFilter);
 
     // set current date for home url
-    searchParams.get("date") ||
+    (searchParams.get("date") && searchParams.get("group")) ||
       setSearchParams({
         date: date,
         group: JSON.parse(selectCurrentGroup).short,

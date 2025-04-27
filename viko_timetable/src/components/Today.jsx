@@ -100,6 +100,7 @@ const Taday = ({
       const response = await fetch(
         `${API_URL}/generate_og_image/?url=${window.location.href}`
       );
+      console.log(window.location.href);
       const message = await response.json();
       console.log("Message from OG image:");
     } catch (err) {
@@ -108,17 +109,20 @@ const Taday = ({
 
     // Check if Web Share API is available (for mobile users)
 
-    try {
-      await navigator.share({
-        title: "VIKO EIF Timetable App",
-        url: `${API_URL}/preview/${searchParams.get(
-          "group"
-        )}/${searchParams.get("date")}`,
-        // url: window.location.href,
-      });
-      console.log("Shared successfully!");
-    } catch (error) {
-      console.error("Error sharing:", error);
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: "VIKO EIF Timetable App",
+          url: `${API_URL}/preview/${searchParams.get(
+            "group"
+          )}/${searchParams.get("date")}`,
+          // url: window.location.href,
+        });
+        console.log("Shared successfully!");
+      } catch (error) {
+        console.error("Error sharing:", error);
+      }
+    } else {
       copyToClipboard(window.location.href);
       toast.success(
         `Copied to your clip board! \n${API_URL}/preview/${searchParams.get(
