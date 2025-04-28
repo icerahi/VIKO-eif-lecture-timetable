@@ -100,7 +100,7 @@ app.get("/preview/:group/:date/", async (req, res) => {
     <body>
       <p>Redirecting...</p>
       <script>
-        // window.location.href = "https://viko-eif.imranhasan.dev/?date=${date}&group=${group}";
+        window.location.href = "https://viko-eif.imranhasan.dev/?date=${date}&group=${group}";
       </script>
     </body>
     </html>`;
