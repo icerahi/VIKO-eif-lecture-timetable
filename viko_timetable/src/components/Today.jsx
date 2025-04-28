@@ -165,7 +165,7 @@ const Taday = ({
               <img width={30} src={copyIcon} />
             </button>
           </div>
-
+        
           <div id="lectures" className="lectures">
             {lectures.length == 0 && (
               <p>No lectures information available for the selected day!</p>
