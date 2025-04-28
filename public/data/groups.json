@@ -1,0 +1,152 @@
+[
+  {
+    "id": "-922",
+    "name": "EI22A",
+    "short": "EI22A"
+  },
+  {
+    "id": "-933",
+    "name": "EI22S",
+    "short": "EI22S"
+  },
+  {
+    "id": "-921",
+    "name": "EI23A",
+    "short": "EI23A"
+  },
+  {
+    "id": "-930",
+    "name": "EI23S",
+    "short": "EI23S"
+  },
+  {
+    "id": "-920",
+    "name": "EI24",
+    "short": "EI24"
+  },
+  {
+    "id": "-925",
+    "name": "EI24S",
+    "short": "EI24S"
+  },
+  {
+    "id": "-908",
+    "name": "IS22A",
+    "short": "IS22A"
+  },
+  {
+    "id": "-931",
+    "name": "IS22S",
+    "short": "IS22S"
+  },
+  {
+    "id": "-907",
+    "name": "IS23A",
+    "short": "IS23A"
+  },
+  {
+    "id": "-929",
+    "name": "IS23S",
+    "short": "IS23S"
+  },
+  {
+    "id": "-906",
+    "name": "IS24",
+    "short": "IS24"
+  },
+  {
+    "id": "-924",
+    "name": "IS24SN",
+    "short": "IS24SN"
+  },
+  {
+    "id": "-919",
+    "name": "KS22A",
+    "short": "KS22A"
+  },
+  {
+    "id": "-934",
+    "name": "KS22S",
+    "short": "KS22S"
+  },
+  {
+    "id": "-918",
+    "name": "KS23A",
+    "short": "KS23A"
+  },
+  {
+    "id": "-917",
+    "name": "KS24",
+    "short": "KS24"
+  },
+  {
+    "id": "-926",
+    "name": "KS24S",
+    "short": "KS24S"
+  },
+  {
+    "id": "-914",
+    "name": "PI22A",
+    "short": "PI22A"
+  },
+  {
+    "id": "-915",
+    "name": "PI22B",
+    "short": "PI22B"
+  },
+  {
+    "id": "-916",
+    "name": "PI22E",
+    "short": "PI22E"
+  },
+  {
+    "id": "-932",
+    "name": "PI22S",
+    "short": "PI22S"
+  },
+  {
+    "id": "-911",
+    "name": "PI23A",
+    "short": "PI23A"
+  },
+  {
+    "id": "-912",
+    "name": "PI23B",
+    "short": "PI23B"
+  },
+  {
+    "id": "-913",
+    "name": "PI23E",
+    "short": "PI23E"
+  },
+  {
+    "id": "-927",
+    "name": "PI23S",
+    "short": "PI23S"
+  },
+  {
+    "id": "-928",
+    "name": "PI23SN",
+    "short": "PI23SN"
+  },
+  {
+    "id": "-909",
+    "name": "PI24",
+    "short": "PI24"
+  },
+  {
+    "id": "-910",
+    "name": "PI24E",
+    "short": "PI24E"
+  },
+  {
+    "id": "-923",
+    "name": "PI24SN",
+    "short": "PI24SN"
+  },
+  {
+    "id": "-905",
+    "name": "PIT23A",
+    "short": "PIT23A"
+  }
+]

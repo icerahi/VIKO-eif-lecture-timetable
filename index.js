@@ -16,12 +16,16 @@ app.use(bodyParser.json());
 //middleware to serve static files from public folder
 app.use(express.static(path.join(__dirname, "public")));
 
+//public folder
+const publicFolderPath = path.join(__dirname, "public");
+
 const MAIN_DB_URL =
   "https://vikoeif.edupage.org/rpr/server/maindbi.js?__func=mainDBIAccessor";
 
 const CURRENT_URL =
   "https://vikoeif.edupage.org/timetable/server/currenttt.js?__func=curentttGetData";
 
+let groups = [];
 app.post("/all", async (req, res) => {
   try {
     // Forward the request body to the external API
@@ -30,6 +34,13 @@ app.post("/all", async (req, res) => {
         "Content-Type": "application/json",
       },
     });
+
+    const groupsFilePath = path.join(__dirname, "public/data", "groups.json");
+    await fs.writeFile(
+      groupsFilePath,
+      JSON.stringify(response.data?.r?.tables[3]?.data_rows, null, 2),
+      "utf-8"
+    );
 
     // Send the API response back to the frontend
     res.json(response.data);

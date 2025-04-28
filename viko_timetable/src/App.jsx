@@ -66,27 +66,35 @@ const App = () => {
   const [currentDayLectureInfo, setCurrentDayLectureInfo] = useState([]);
 
   const [selectCurrentGroup, setSelectCurrentGroup] = useState(() => {
-    const paramGroup = searchParams.get("group") || "PI24E";
-
-    const group = groups?.find((g) => g.short === paramGroup.toUpperCase());
-    console.log("grouppppp:", group);
-    return group
-      ? JSON.stringify(group)
-      : localStorage.getItem("current_group") ||
-          JSON.stringify({
-            id: "-910",
-            name: "PI24E",
-            short: "PI24E",
-          });
+    return (
+      localStorage.getItem("current_group") ||
+      JSON.stringify({
+        id: "-910",
+        name: "PI24E",
+        short: "PI24E",
+      })
+    );
   });
 
   const current = useFetch(
     `${API_URL}/current`,
-    getPayload(date, date, false, JSON.parse(selectCurrentGroup).id),
+    getPayload(date, date, false, JSON.parse(selectCurrentGroup)?.id),
     date,
-    JSON.parse(selectCurrentGroup).id
+    JSON.parse(selectCurrentGroup)?.id
   );
   useEffect(() => {
+    if (groups.length === 0) {
+      fetch(`${API_URL}/data/groups.json`)
+        .then((response) => response.json())
+        .then((data) => {
+          setGroups(data);
+          localStorage.setItem("groups", JSON.stringify(data)); // Cache in localStorage
+        })
+        .catch((error) => {
+          console.error("Error fetching groups:", error);
+        });
+    }
+
     if (all_info) {
       const allTeachers = all_info?.r.tables[0]?.data_rows;
       const allSubjects = all_info?.r.tables[1]?.data_rows;
@@ -96,8 +104,8 @@ const App = () => {
       setTeachers(allTeachers);
       setSubjects(allSubjects);
       setClassRooms(allClassrooms);
-      setGroups(allGroups);
-      localStorage.setItem("groups", JSON.stringify(allGroups));
+      // setGroups(allGroups);
+      // localStorage.setItem("groups", JSON.stringify(allGroups));
     }
     if (current) {
       const extractCurrentDayLecturesInfo = () => {
@@ -167,6 +175,26 @@ const App = () => {
   }, [all_info, current, subjects, teachers, selectCurrentGroup, date]);
 
   useEffect(() => {
+    if (groups && groups.length > 0) {
+      const paramGroup = searchParams.get("group") || "PI24E";
+
+      const group = groups?.find((g) => g.short === paramGroup.toUpperCase());
+      if (group) {
+        localStorage.setItem("current_group", JSON.stringify(group));
+        setSelectCurrentGroup(JSON.stringify(group));
+      }
+      // console.log("grouppppp:", group);
+      // setSelectCurrentGroup(
+      //   group
+      //     ? JSON.stringify(group)
+      //     : localStorage.getItem("current_group") ||
+      //         JSON.stringify({
+      //           id: "-910",
+      //           name: "PI24E",
+      //           short: "PI24E",
+      //         })
+      // );
+    }
     const targetDate = moment(date, "YYYY-MM-DD").format("ddd MMM DD YYYY");
 
     //filter posts by date
