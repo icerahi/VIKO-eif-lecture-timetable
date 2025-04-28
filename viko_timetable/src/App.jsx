@@ -66,7 +66,7 @@ const App = () => {
   const [currentDayLectureInfo, setCurrentDayLectureInfo] = useState([]);
 
   const [selectCurrentGroup, setSelectCurrentGroup] = useState(() => {
-    const paramGroup = searchParams.get("group") || "PI24E";
+    const paramGroup = searchParams.get("group"); //|| "PI24E";
 
     const group = groups.find((g) => g.short === paramGroup.toUpperCase());
 

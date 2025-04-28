@@ -61,6 +61,7 @@ function getOGImageURL(req, group, date) {
   if (defaultImage) {
     return `${req.protocol}://${req.get("host")}/default/default.png`;
   }
+
   return `${req.protocol}://${req.get("host")}/images/${group}_${date}.png`;
 }
 
