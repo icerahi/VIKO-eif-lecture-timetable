@@ -66,10 +66,10 @@ const App = () => {
   const [currentDayLectureInfo, setCurrentDayLectureInfo] = useState([]);
 
   const [selectCurrentGroup, setSelectCurrentGroup] = useState(() => {
-    const paramGroup = searchParams.get("group"); //|| "PI24E";
+    const paramGroup = searchParams.get("group") || "PI24E";
 
-    const group = groups.find((g) => g.short === paramGroup.toUpperCase());
-
+    const group = groups?.find((g) => g.short === paramGroup.toUpperCase());
+    console.log("grouppppp:", group);
     return group
       ? JSON.stringify(group)
       : localStorage.getItem("current_group") ||
@@ -79,7 +79,7 @@ const App = () => {
             short: "PI24E",
           });
   });
-  console.log("select current group:", selectCurrentGroup);
+
   const current = useFetch(
     `${API_URL}/current`,
     getPayload(date, date, false, JSON.parse(selectCurrentGroup).id),
