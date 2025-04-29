@@ -1,6 +1,15 @@
 # VIKO EIF Lecture Timetable
 
-This project provides a lecture timetable for a specific group at Vilniaus kolegija (VIKO) Faculty of Electronics and Informatics (EIF). It consists of a Node.js proxy server and a React.js frontend application.
+**Description**:  
+VIKO-eif Lecture Timetable is a Progressive Web Application (PWA) designed for students at the Faculty of Electronics and Informatics (VIKO). The app consolidates lecture schedules for different groups, fetching data from multiple API endpoints through a custom Node.js proxy server. It displays real-time updates on class cancellations and schedule changes via Firebase, making it easier for students to stay informed without navigating multiple websites.
+
+**Key Features**:
+- **Real-time updates** for schedule changes and cancellations, delivered instantly through Firebase.
+- **Single platform access** for all students, eliminating the need to visit separate sites for different groups or changes.
+- **Social media sharing**: Allows students to share schedules for specific days on platforms like WhatsApp or Facebook, complete with live previews.
+- **PWA support**, enabling easy installation on mobile devices for an app-like experience.
+
+This app currently serves **50-100 active users daily**, helping students stay on top of their schedules with minimal hassle.
 
 ## Project Structure
 
