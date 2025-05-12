@@ -10,6 +10,7 @@ import { useContext } from "react";
 import { AppContext } from "../context/AppContext";
 import ReviewToast from "./ReviewToast";
 import { useSearchParams } from "react-router-dom";
+import ExamNotificationBtn from "./ExamNotificationBtn";
 
 const Taday = ({
   groups,
@@ -150,6 +151,9 @@ const Taday = ({
     >
       <div className="timetable w-1/1 sm:w-1/2">
         {/* <div className="camera-nosile"></div> */}
+        {JSON.parse(selectCurrentGroup)?.short === "PI24E" && (
+          <ExamNotificationBtn />
+        )}
         <div className="lecture-container mt-3">
           <div className="flex justify-between items-center">
             <h1 className="title-info text-2xl text-gray-50">
@@ -165,7 +169,7 @@ const Taday = ({
               <img width={30} src={copyIcon} />
             </button>
           </div>
-        
+
           <div id="lectures" className="lectures">
             {lectures.length == 0 && (
               <p>No lectures information available for the selected day!</p>
@@ -220,7 +224,6 @@ const Taday = ({
             ))}
           </div>
         </div>
-
         <div className="flex justify-center items-center fixed bottom-0 left-1/2 translate-x-[-50%] w-[max-content]">
           <button
             className="btn-primary  hover:scale-105 transition-all duration-500"
