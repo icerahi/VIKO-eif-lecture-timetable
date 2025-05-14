@@ -43,7 +43,7 @@ const ExamNotificationBtn = () => {
     toast.info(
       <div
         style={{
-          overflow: "scroll",
+          overflowY: "scroll",
           height: `${active === "notification" && "50vh"}`,
         }}
         className="p-4 "
