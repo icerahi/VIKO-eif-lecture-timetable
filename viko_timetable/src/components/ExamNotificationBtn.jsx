@@ -19,7 +19,7 @@ const ExamNotificationBtn = () => {
       const { data, error } = await supabase
         .from("notification") // Replace with your table name
         .select("*")
-        .order("created_at", { ascending: true });
+        .order("created_at", { ascending: false });
 
       if (!error) setNotification(data);
     }
@@ -55,6 +55,7 @@ const ExamNotificationBtn = () => {
               alt="Exam Schedule not uploaded to VIKO EIF webpages yet!"
               className=" w-full max-w-md"
             />
+            <hr />
           </div>
         ) : (
           notifications.map((note) => (
