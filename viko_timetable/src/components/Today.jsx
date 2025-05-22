@@ -29,8 +29,11 @@ const Taday = ({
   const [searchParams, setSearchParams] = useSearchParams();
 
   const CheckLectureStatus = (lecture) => {
+    console.log(changedLectures);
+    console.log(lecture);
     if (changedLectures.some((item) => item.paskaita === lecture.periodno)) {
       const lec = changedLectures.find((l) => l.paskaita === lecture.periodno);
+      console.log("checking lecture,:", lec.auditorija);
       return { room: lec.auditorija, teacher: lec.destytojas };
     }
   };
@@ -188,7 +191,6 @@ const Taday = ({
                   backgroundColor: lightenHexToRgb(lecture?.colors, 0.4), // Lighten by 50%
                 }}
               >
-                {console.log(lecture)}
                 <div>
                   <p>{lecture.periodno}</p>
                 </div>

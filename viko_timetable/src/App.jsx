@@ -33,9 +33,10 @@ const App = () => {
 
   //firebise
   const [latestPost, setLatestPost] = useState(null);
-  console.log("latest postss:", latestPost);
+
   const [allPosts, setAllPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
+  console.log("filtered post", filteredPosts);
   const [date, setDate] = useState(() => {
     const date = searchParams.get("date") || moment();
 
@@ -62,7 +63,7 @@ const App = () => {
     const groups = localStorage.getItem("groups");
     return groups ? JSON.parse(groups) : [];
   });
-  console.log(groups);
+
   const [currentDayLectureInfo, setCurrentDayLectureInfo] = useState([]);
 
   const [selectCurrentGroup, setSelectCurrentGroup] = useState(() => {
@@ -114,7 +115,7 @@ const App = () => {
         const subjectMap = new Map(subjects.map((s) => [s.id, s]));
         const classroomMap = new Map(classrooms.map((c) => [c.id, c]));
         const teacherMap = new Map(teachers.map((t) => [t.id, t]));
-        console.log("test", current.r.ttitems);
+
         const info = current.r.ttitems.map((lec) => ({
           subject: subjectMap.get(lec.subjectid)?.short || "Unknown",
           // const subject = subjects.find(({ id }) => id === lec.subjectid);
@@ -204,10 +205,12 @@ const App = () => {
     );
     const currentDayFilter = filtered.filter(
       (post) =>
-        post.grupe.replace(/<[^>]*>/g, "").includes(selectCurrentGroup.short)
+        post.grupe
+          .replace(/<[^>]*>/g, "")
+          .includes(JSON.parse(selectCurrentGroup).short)
       //have to fix here
     );
-    console.log("currentday filter", filtered);
+
     setFilteredPosts(currentDayFilter);
 
     // set current date for home url
@@ -242,7 +245,7 @@ const App = () => {
     });
     setDate(prevDate);
   };
-  console.log("select current group:", selectCurrentGroup);
+
   return (
     <>
       <main>
