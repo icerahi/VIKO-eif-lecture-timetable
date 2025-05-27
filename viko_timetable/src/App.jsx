@@ -281,7 +281,7 @@ const App = () => {
             <a
               className="underline"
               target="_blank"
-              href="https://github.com/icerahi"
+              href="https://imranhasan.dev"
             >
               Imran
             </a>{" "}
@@ -294,7 +294,13 @@ const App = () => {
               {" "}
               Source Code
             </a>{" "}
-            | Feel free to contribute!
+            | All schedule data are coming from:{" "}
+            <a
+              className="underline"
+              href="https://vikoeif.edupage.org/timetable/"
+            >
+              vikoeif.edupage.org/timetable/
+            </a>
           </em>
         </footer>
       </main>
