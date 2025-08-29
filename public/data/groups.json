@@ -1,152 +1,137 @@
 [
   {
-    "id": "-922",
-    "name": "EI22A",
-    "short": "EI22A"
-  },
-  {
-    "id": "-933",
-    "name": "EI22S",
-    "short": "EI22S"
-  },
-  {
-    "id": "-921",
+    "id": "-970",
     "name": "EI23A",
     "short": "EI23A"
   },
   {
-    "id": "-930",
+    "id": "-971",
     "name": "EI23S",
     "short": "EI23S"
   },
   {
-    "id": "-920",
+    "id": "-972",
     "name": "EI24",
     "short": "EI24"
   },
   {
-    "id": "-925",
-    "name": "EI24S",
-    "short": "EI24S"
+    "id": "-973",
+    "name": "EI25",
+    "short": "EI25"
   },
   {
-    "id": "-908",
-    "name": "IS22A",
-    "short": "IS22A"
+    "id": "-974",
+    "name": "EI25S",
+    "short": "EI25S"
   },
   {
-    "id": "-931",
-    "name": "IS22S",
-    "short": "IS22S"
-  },
-  {
-    "id": "-907",
+    "id": "-975",
     "name": "IS23A",
     "short": "IS23A"
   },
   {
-    "id": "-929",
+    "id": "-976",
     "name": "IS23S",
     "short": "IS23S"
   },
   {
-    "id": "-906",
+    "id": "-977",
     "name": "IS24",
     "short": "IS24"
   },
   {
-    "id": "-924",
+    "id": "-978",
     "name": "IS24SN",
     "short": "IS24SN"
   },
   {
-    "id": "-919",
-    "name": "KS22A",
-    "short": "KS22A"
+    "id": "-979",
+    "name": "IS25",
+    "short": "IS25"
   },
   {
-    "id": "-934",
-    "name": "KS22S",
-    "short": "KS22S"
+    "id": "-980",
+    "name": "IS25SN",
+    "short": "IS25SN"
   },
   {
-    "id": "-918",
+    "id": "-981",
     "name": "KS23A",
     "short": "KS23A"
   },
   {
-    "id": "-917",
+    "id": "-982",
     "name": "KS24",
     "short": "KS24"
   },
   {
-    "id": "-926",
+    "id": "-983",
     "name": "KS24S",
     "short": "KS24S"
   },
   {
-    "id": "-914",
-    "name": "PI22A",
-    "short": "PI22A"
+    "id": "-984",
+    "name": "KS25",
+    "short": "KS25"
   },
   {
-    "id": "-915",
-    "name": "PI22B",
-    "short": "PI22B"
+    "id": "-985",
+    "name": "KS25S",
+    "short": "KS25S"
   },
   {
-    "id": "-916",
-    "name": "PI22E",
-    "short": "PI22E"
-  },
-  {
-    "id": "-932",
-    "name": "PI22S",
-    "short": "PI22S"
-  },
-  {
-    "id": "-911",
+    "id": "-986",
     "name": "PI23A",
     "short": "PI23A"
   },
   {
-    "id": "-912",
+    "id": "-987",
     "name": "PI23B",
     "short": "PI23B"
   },
   {
-    "id": "-913",
+    "id": "-988",
     "name": "PI23E",
     "short": "PI23E"
   },
   {
-    "id": "-927",
+    "id": "-989",
     "name": "PI23S",
     "short": "PI23S"
   },
   {
-    "id": "-928",
+    "id": "-990",
     "name": "PI23SN",
     "short": "PI23SN"
   },
   {
-    "id": "-909",
+    "id": "-991",
     "name": "PI24",
     "short": "PI24"
   },
   {
-    "id": "-910",
+    "id": "-992",
     "name": "PI24E",
     "short": "PI24E"
   },
   {
-    "id": "-923",
+    "id": "-993",
     "name": "PI24SN",
     "short": "PI24SN"
   },
   {
-    "id": "-905",
-    "name": "PIT23A",
-    "short": "PIT23A"
+    "id": "-994",
+    "name": "PI25",
+    "short": "PI25"
+  },
+  {
+    "id": "-995",
+    "name": "PI25E",
+    "short": "PI25E"
+  },
+  {
+    "id": "-996",
+    "name": "PI25SN",
+    "short": "PI25SN"
   }
 ]

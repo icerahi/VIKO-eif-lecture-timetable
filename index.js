@@ -60,6 +60,7 @@ app.post("/current", async (req, res) => {
     });
 
     // Send the API response back to the frontend
+    console.log(response.data);
     res.json(response.data);
   } catch (error) {
     console.error("Error fetching data:", error.message);

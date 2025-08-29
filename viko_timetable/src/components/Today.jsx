@@ -1,16 +1,14 @@
-import "./Today.css";
-import moment from "moment";
-import { lightenHexToRgb } from "../utils/lightenColor";
-import { ToastContainer, toast, Bounce, Zoom } from "react-toastify";
 import { useClipboard } from "@custom-react-hooks/use-clipboard";
-import copyIcon from "../../assets/copytoclipboard.png";
-import InstallPWAButton from "./InstallPWAButton";
-import { useEffect, useState } from "react";
-import { useContext } from "react";
-import { AppContext } from "../context/AppContext";
-import ReviewToast from "./ReviewToast";
+import moment from "moment";
+import { useContext, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { Zoom, toast } from "react-toastify";
+import copyIcon from "../../assets/copytoclipboard.png";
+import { AppContext } from "../context/AppContext";
+import { lightenHexToRgb } from "../utils/lightenColor";
 import ExamNotificationBtn from "./ExamNotificationBtn";
+import InstallPWAButton from "./InstallPWAButton";
+import "./Today.css";
 
 const Taday = ({
   groups,
@@ -29,8 +27,6 @@ const Taday = ({
   const [searchParams, setSearchParams] = useSearchParams();
 
   const CheckLectureStatus = (lecture) => {
-    console.log(changedLectures);
-    console.log(lecture);
     if (changedLectures.some((item) => item.paskaita === lecture.periodno)) {
       const lec = changedLectures.find((l) => l.paskaita === lecture.periodno);
       console.log("checking lecture,:", lec.auditorija);

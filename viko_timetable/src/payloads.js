@@ -3,8 +3,13 @@ export const getPayload = (datefrom, dateto, all = false, groupId = "-910") => {
     return {
       __args: [
         null,
-        2024,
-        { vt_filter: { datefrom, dateto } },
+        2025,
+        {
+          vt_filter: {
+            datefrom: datefrom,
+            dateto: dateto,
+          },
+        },
         {
           op: "fetch",
           needed_part: {
@@ -94,16 +99,15 @@ export const getPayload = (datefrom, dateto, all = false, groupId = "-910") => {
       __args: [
         null,
         {
-          year: 2024,
-          datefrom,
-          dateto,
+          year: 2025,
+          datefrom: datefrom,
+          dateto: dateto,
           table: "classes",
-          id: groupId,
+          id: "-992",
           showColors: true,
           showIgroupsInClasses: false,
           showOrig: true,
           log_module: "CurrentTTView",
-          subjects: true,
         },
       ],
       __gsh: "00000000",
