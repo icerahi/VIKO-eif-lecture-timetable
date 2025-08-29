@@ -103,7 +103,7 @@ export const getPayload = (datefrom, dateto, all = false, groupId = "-910") => {
           datefrom: datefrom,
           dateto: dateto,
           table: "classes",
-          id: "-992",
+          id: groupId,
           showColors: true,
           showIgroupsInClasses: false,
           showOrig: true,
