@@ -9,12 +9,12 @@
 }
 main {
   background-color: white;
-  height: 100vh;
-  width: 100vw;
+  /* height: 100vh; */
+  /* width: 100vw; */
   background-image: url("./viko_eif.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: top;
+  /* background-repeat: no-repeat; */
+  /* background-size:; */
+  /* background-position: top; */
 }
 
 @layer components {
