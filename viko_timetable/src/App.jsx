@@ -1,22 +1,22 @@
-import { useEffect, useState } from "react";
-import useFetch from "./useFetch";
-import { getPayload } from "./payloads";
 import moment from "moment";
-import "./App.css";
+import { useEffect, useState } from "react";
 import { Route, Routes, useSearchParams } from "react-router-dom";
+import "./App.css";
+import { getPayload } from "./payloads";
+import useFetch from "./useFetch";
 //firbase config
+import { useContext } from "react";
+import { ToastContainer } from "react-toastify";
+import Today from "./components/Today";
+import { AppContext } from "./context/AppContext";
 import {
   db,
-  ref,
-  onValue,
-  query,
-  orderByChild,
   limitToLast,
+  onValue,
+  orderByChild,
+  query,
+  ref,
 } from "./firebaseConfig";
-import Today from "./components/Today";
-import { useContext } from "react";
-import { AppContext } from "./context/AppContext";
-import { ToastContainer } from "react-toastify";
 
 // 🔹 Declare debounce function globally (outside the component)
 const debounce = (func, delay) => {

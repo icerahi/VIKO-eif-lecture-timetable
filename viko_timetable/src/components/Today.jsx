@@ -6,8 +6,8 @@ import { Zoom, toast } from "react-toastify";
 import copyIcon from "../../assets/copytoclipboard.png";
 import { AppContext } from "../context/AppContext";
 import { lightenHexToRgb } from "../utils/lightenColor";
-import ExamNotificationBtn from "./ExamNotificationBtn";
 import InstallPWAButton from "./InstallPWAButton";
+import Music from "./Music";
 import "./Today.css";
 
 const Taday = ({
@@ -148,11 +148,17 @@ const Taday = ({
       id="screenshot"
       className="flex sm:flex-row-reverse flex-wrap justify-center items-center"
     >
+      <p className="text-red-500 text-center text-sm animate-marquee font-lighter italic animate-pulse shadow-2xl bg-gray-400">
+        🚨 Uninstall me emotionally first. Shutting down in few weeks 🫠.
+      </p>
+
       <div className="timetable w-1/1 sm:w-1/2">
         {/* <div className="camera-nosile"></div> */}
-        {JSON.parse(selectCurrentGroup)?.short === "PI24E" && (
+        {/* {JSON.parse(selectCurrentGroup)?.short === "PI24E" && (
           <ExamNotificationBtn />
-        )}
+        )} */}
+
+        <Music />
         <div className="lecture-container mt-3">
           <div className="flex justify-between items-center">
             <h1 className="title-info text-2xl text-gray-50">
