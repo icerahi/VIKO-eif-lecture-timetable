@@ -277,15 +277,7 @@ const App = () => {
         />
         <footer className="text-center text-sm fixed bottom-0 w-1/1 p-1 bg-gray-500 text-white">
           <em className="opacity-50">
-            Made with ❤️ by{" "}
-            <a
-              className="underline"
-              target="_blank"
-              href="https://imranhasan.dev"
-            >
-              Imran
-            </a>{" "}
-            |
+            Imran |
             <a
               href="https://github.com/icerahi/VIKO-eif-lecture-timetable"
               className="underline"
