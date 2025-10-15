@@ -275,7 +275,7 @@ const App = () => {
           closeOnClick
           draggable={true}
         />
-        <footer className="text-center text-sm fixed bottom-0 w-1/1 p-1 bg-gray-500 text-white">
+        <footer className="text-center text-sm w-1/1 p-1 bg-gray-500 text-white">
           <em className="opacity-50">
             Imran |
             <a
@@ -283,10 +283,9 @@ const App = () => {
               className="underline"
               target="_blank"
             >
-              {" "}
               Source Code
-            </a>{" "}
-            | All schedule data are coming from:{" "}
+            </a>
+            | Data Source:
             <a
               className="underline"
               href="https://vikoeif.edupage.org/timetable/"
