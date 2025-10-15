@@ -277,15 +277,15 @@ const App = () => {
         />
         <footer className="text-center text-sm w-1/1 p-1 bg-gray-500 text-white">
           <em className="opacity-50">
-            Imran |
             <a
               href="https://github.com/icerahi/VIKO-eif-lecture-timetable"
               className="underline"
               target="_blank"
             >
+              {" "}
               Source Code
-            </a>
-            | Data Source:
+            </a>{" "}
+            | All schedule data are coming from:{" "}
             <a
               className="underline"
               href="https://vikoeif.edupage.org/timetable/"
