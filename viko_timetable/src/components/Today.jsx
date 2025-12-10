@@ -192,6 +192,9 @@ const Taday = ({
                   <p>{lecture.periodno}</p>
                 </div>
                 <div>
+                  <small className="font-bold text-indigo-500">
+                    {lecture.subgroup && "Sub Group: " + lecture.subgroup}
+                  </small>
                   <h3 className="font-bold">{lecture.subject}</h3>
                   <p>
                     {lecture.starttime} - {lecture.endtime}
@@ -225,7 +228,7 @@ const Taday = ({
         </div>
         <div className="flex justify-center items-center fixed bottom-0 left-1/2 translate-x-[-50%] w-[max-content]">
           <button
-            className="btn-primary  hover:scale-105 transition-all duration-500"
+            className="btn-primary bg-transparent hover:scale-105 transition-all duration-500"
             onClick={setPrevDay}
           >
             PreviousDay

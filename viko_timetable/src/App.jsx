@@ -134,6 +134,7 @@ const App = () => {
           // const teacher = teachers.find(({ id }) => id == lec.teacherids[0]);
           colors: lec.colors?.[0] || "gray",
           changed: lec.changed || false,
+          subgroup: lec.groupnames[0] || null,
         }));
 
         setCurrentDayLectureInfo(info);
@@ -275,6 +276,7 @@ const App = () => {
           closeOnClick
           draggable={true}
         />
+
         <footer className="text-center text-sm w-1/1 p-1 bg-gray-500 text-white">
           <em className="opacity-50">
             <a
